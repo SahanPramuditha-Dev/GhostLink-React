@@ -28,7 +28,7 @@ from .cli.menu import InteractiveMenu
 
 
 # ─────────────────────────────────────────────────────────────
-#  Attack result wrapper (engine returns a tuple)
+#  Audit result wrapper (engine returns a tuple)
 # ─────────────────────────────────────────────────────────────
 @dataclass
 class AttackResult:
@@ -93,10 +93,10 @@ def display_success(result: AttackResult, ssid: str) -> None:
     verified_clr = C.GREEN if result.verified else C.RED
 
     print(f"\n{C.GHOST_CYAN}┌{_LINE}┐{C.RESET}")
-    print(_box_row(f"  {C.BOLD}{C.GREEN}TARGET COMPROMISED{C.RESET}", C.GHOST_CYAN))
+    print(_box_row(f"  {C.BOLD}{C.GREEN}WEAK CREDENTIAL VERIFIED{C.RESET}", C.GHOST_CYAN))
     print(f"{C.GHOST_CYAN}├{_LINE}┤{C.RESET}")
     print(_row("SSID",     ssid))
-    print(_row("Password", result.password,  C.GREEN))
+    print(_row("Credential", result.password,  C.GREEN))
     print(_row("Attempts", attempts_str))
     print(_row("Time",     f"{elapsed_td}  ({result.elapsed:.1f}s)"))
     print(_row("Speed",    speed_str))
@@ -111,7 +111,7 @@ def display_failure(result: AttackResult) -> None:
     attempts_str = f"{result.attempts:,}"
 
     print(f"\n{C.RED}┌{_LINE}┐{C.RESET}")
-    print(_box_row(f"  {C.BOLD}{C.RED}PASSWORD NOT FOUND{C.RESET}", C.RED))
+    print(_box_row(f"  {C.BOLD}{C.RED}NO CREDENTIAL MATCH{C.RESET}", C.RED))
     print(f"{C.RED}├{_LINE}┤{C.RESET}")
     print(_box_row(f"  {C.BOLD}{'Attempts':<12}{C.RESET}  {attempts_str}", C.RED))
     print(_box_row(f"  {C.BOLD}{'Time':<12}{C.RESET}  {elapsed_td}", C.RED))
@@ -144,9 +144,9 @@ def parse_args() -> argparse.Namespace:
     target.add_argument("--ssid",      type=str,  help="Target network SSID")
     target.add_argument("--interface", type=str,  help="Wireless interface to use (e.g. wlan0)")
 
-    attack = parser.add_argument_group("Attack options")
+    attack = parser.add_argument_group("Audit options")
     attack.add_argument("--profile",  type=str,  choices=list(PROFILES.keys()),
-                        help="Built-in attack profile (overrides --charset)")
+                        help="Built-in audit profile (overrides --charset)")
     attack.add_argument("--charset",  type=str,  help="Custom charset string")
     attack.add_argument("--minlen",   type=int,  default=DEFAULT_MINLEN,  metavar="N")
     attack.add_argument("--maxlen",   type=int,  default=DEFAULT_MAXLEN,  metavar="N")
@@ -230,7 +230,7 @@ def main() -> None:
     vault.load()
 
     # ── Pre-flight summary ──────────────────────────────────────────────
-    _section("Attack Configuration")
+    _section("Audit Configuration")
     print(f"  {C.DIM}SSID     :{C.RESET}  {config['ssid']}")
     print(f"  {C.DIM}Charset  :{C.RESET}  {config['charset'][:40]}"
           f"{'...' if len(config['charset']) > 40 else ''}  ({len(config['charset'])} chars)")
@@ -241,7 +241,7 @@ def main() -> None:
     print(f"  {C.DIM}Timeout  :{C.RESET}  {config['timeout']}s per attempt")
 
     # ── Run engine ──────────────────────────────────────────────────────
-    _section("Initiating Attack Sequence")
+    _section("Initiating Authorized Test Sequence")
     engine = BruteForceEngine(config, vault)
 
     try:
@@ -249,7 +249,7 @@ def main() -> None:
         pwd, attempts, elapsed, verified = engine.execute()
         result = AttackResult(pwd, attempts, elapsed, verified)
     except KeyboardInterrupt:
-        print(f"\n{C.YELLOW}[!] Attack interrupted by user.{C.RESET}")
+        print(f"\n{C.YELLOW}[!] Authorized test interrupted by user.{C.RESET}")
         print(f"{C.DIM}Progress has been saved for resume.{C.RESET}")
         sys.exit(0)
     except RuntimeError as exc:

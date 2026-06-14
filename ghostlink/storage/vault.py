@@ -17,6 +17,8 @@ class PasswordVault:
     def __init__(self, path: Path = VAULT_PATH):
         self.path = path
         self.data: Dict[str, Dict] = {}
+        self.encryption_enabled = False
+        self.is_unlocked = True
     
     def load(self) -> None:
         """Load vault from disk"""
@@ -68,6 +70,27 @@ class PasswordVault:
     def list_all(self) -> Dict[str, str]:
         """List all stored passwords"""
         return {k: v.get("password", "???") for k, v in self.data.items()}
+
+    def list_entries(self) -> list[Dict]:
+        """Return full entry objects for UI display."""
+        rows = []
+        for ssid, payload in sorted(self.data.items(), key=lambda x: x[0].lower()):
+            rows.append({
+                "ssid": ssid,
+                "password": payload.get("password", ""),
+                "verified": bool(payload.get("verified", False)),
+                "timestamp": payload.get("timestamp", ""),
+                "attempts": int(payload.get("attempts", 0) or 0),
+            })
+        return rows
+
+    def lock(self) -> None:
+        self.is_unlocked = False
+
+    def unlock(self, _master_password: str = "") -> bool:
+        # Encryption is not yet enabled, so unlock succeeds without checks.
+        self.is_unlocked = True
+        return True
     
     def get_count(self) -> int:
         """Get number of stored passwords"""

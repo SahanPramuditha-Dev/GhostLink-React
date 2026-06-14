@@ -1,8 +1,8 @@
 !include "MUI2.nsh"
 
-Name "GHOSTLINK"
-OutFile "GHOSTLINK_Setup.exe"
-InstallDir "$PROGRAMFILES\GHOSTLINK"
+Name "GhostLink"
+OutFile "GhostLink_Setup_v3.1.0.exe"
+InstallDir "$PROGRAMFILES\GhostLink"
 RequestExecutionLevel admin
 
 !insertmacro MUI_PAGE_DIRECTORY
@@ -18,13 +18,13 @@ Section "Install"
   ;   Tell NSIS to install shortcuts for ALL users
   SetShellVarContext all
   
-  CreateShortCut "$DESKTOP\GHOSTLINK.lnk" "$INSTDIR\GHOSTLINK.exe"
-  CreateDirectory "$SMPROGRAMS\GHOSTLINK"
-  CreateShortCut "$SMPROGRAMS\GHOSTLINK\GHOSTLINK.lnk" "$INSTDIR\GHOSTLINK.exe"
-  CreateShortCut "$SMPROGRAMS\GHOSTLINK\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+  CreateShortCut "$DESKTOP\GhostLink.lnk" "$INSTDIR\GHOSTLINK.exe"
+  CreateDirectory "$SMPROGRAMS\GhostLink"
+  CreateShortCut "$SMPROGRAMS\GhostLink\GhostLink.lnk" "$INSTDIR\GHOSTLINK.exe"
+  CreateShortCut "$SMPROGRAMS\GhostLink\Uninstall.lnk" "$INSTDIR\uninstall.exe"
   
   WriteUninstaller "$INSTDIR\uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GHOSTLINK" "DisplayName" "GHOSTLINK"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GHOSTLINK" "DisplayName" "GhostLink v3.1.0"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GHOSTLINK" "UninstallString" "$INSTDIR\uninstall.exe"
 SectionEnd
 
@@ -32,7 +32,7 @@ Section "Uninstall"
   SetShellVarContext all
   Delete "$INSTDIR\*.*"
   RMDir "$INSTDIR"
-  Delete "$DESKTOP\GHOSTLINK.lnk"
-  RMDir /r "$SMPROGRAMS\GHOSTLINK"
+  Delete "$DESKTOP\GhostLink.lnk"
+  RMDir /r "$SMPROGRAMS\GhostLink"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GHOSTLINK"
 SectionEnd

@@ -98,12 +98,12 @@ class InteractiveMenu:
         menu_text = f"""
   [{C.GHOST_GREEN}0{C.RESET}]  Network Scan (when connected)
   [{C.GHOST_GREEN}1{C.RESET}]  Scan & Select Target
-  [{C.GHOST_GREEN}2{C.RESET}]  Choose Attack Profile  
+  [{C.GHOST_GREEN}2{C.RESET}]  Choose Audit Profile  
   [{C.GHOST_GREEN}3{C.RESET}]  Set Password Length
   [{C.GHOST_GREEN}4{C.RESET}]  Load Wordlist
   [{C.GHOST_GREEN}5{C.RESET}]  Threads & Timeout
   [{C.GHOST_GREEN}6{C.RESET}]  Vault ({cached} cached passwords)
-  [{C.GHOST_GREEN}7{C.RESET}]  {C.GHOST_GREEN}{C.BOLD}START ATTACK{C.RESET}
+  [{C.GHOST_GREEN}7{C.RESET}]  {C.GHOST_GREEN}{C.BOLD}START AUTHORIZED TEST{C.RESET}
   [{C.GHOST_GREEN}8{C.RESET}]  Help & Info
   [{C.GHOST_GREEN}9{C.RESET}]  Exit
 """
@@ -193,14 +193,14 @@ class InteractiveMenu:
         input("\nPress Enter to continue...")
     
     def _choose_profile(self):
-        print(f"\n{C.BOLD}Available Attack Profiles:{C.RESET}\n")
+        print(f"\n{C.BOLD}Available Audit Profiles:{C.RESET}\n")
         for pid, profile in PROFILES.items():
             desc_text = f"{profile.description} ({profile.size} characters)"
             print(f"  {C.GREEN}[{pid}]{C.RESET} {profile.icon} {C.BOLD}{profile.name}{C.RESET}")
             print(f"      {C.DIM}{desc_text}{C.RESET}")
         
         print(f"\n  {C.GREEN}[C]{C.RESET} Custom charset")
-        print(f"  {C.GREEN}[M]{C.RESET} Mask attack (e.g., ?d?d?d?d?d?d?d?d)")
+        print(f"  {C.GREEN}[M]{C.RESET} Mask test pattern (e.g., ?d?d?d?d?d?d?d?d)")
         
         ch = input(f"\n{C.CYAN}Choose profile [1-9] or C/M: {C.RESET}").strip().lower()
         
@@ -252,7 +252,7 @@ class InteractiveMenu:
         if total > 0:
             print(f"\n{C.CYAN}[i] Estimated search space: {C.BOLD}{format_number(total)}{C.RESET} combinations")
             if total > 1_000_000:
-                print(f"{C.YELLOW}[!] Large search space - attack may take a long time!{C.RESET}")
+                print(f"{C.YELLOW}[!] Large search space - authorized test may take a long time!{C.RESET}")
         
         input("\nPress Enter to continue...")
     
@@ -349,10 +349,10 @@ class InteractiveMenu:
         input("\nPress Enter to continue...")
     
     def _start_attack(self) -> bool:
-        print(f"\n{C.BOLD}Attack Validation{C.RESET}\n")
+        print(f"\n{C.BOLD}Authorized Test Validation{C.RESET}\n")
         
         if not self.config["ssid"]:
-            print(f"{C.RED}[!] No target selected!{C.RESET}")
+            print(f"{C.RED}[!] No network selected!{C.RESET}")
             print(f"{C.DIM}Use option 1 to scan and select a network.{C.RESET}")
             input("\nPress Enter to continue...")
             return False
@@ -414,13 +414,13 @@ class InteractiveMenu:
         print(f"{'='*60}")
         print(f"\n{C.YELLOW}WARNING: Only proceed if you have authorization!{C.RESET}\n")
         
-        confirm = input(f"{C.GREEN}Start attack? Type 'YES' to confirm: {C.RESET}").strip()
+        confirm = input(f"{C.GREEN}Start authorized test? Type 'YES' to confirm: {C.RESET}").strip()
         if confirm.upper() == "YES":
-            print(f"\n{C.GREEN}[+] Attack confirmed. Starting...{C.RESET}")
+            print(f"\n{C.GREEN}[+] Authorized test confirmed. Starting...{C.RESET}")
             time.sleep(0.5)
             return True
         else:
-            print(f"\n{C.YELLOW}[!] Attack cancelled.{C.RESET}")
+            print(f"\n{C.YELLOW}[!] Authorized test cancelled.{C.RESET}")
             input("Press Enter to continue...")
             return False
     
@@ -432,16 +432,16 @@ class InteractiveMenu:
 
 Quick Start Guide:
   1. Scan (1) - Find target networks
-  2. Profile (2) - Choose attack type
+  2. Profile (2) - Choose audit type
   3. Length (3) - Set password range
-  4. Start (7) - Launch attack
+  4. Start (7) - Launch authorized test
 
 Other options:
   0 - Network Scan (when connected)
   5 - Threads & Timeout
   6 - Vault management
 
-Attack Profiles:
+Audit Profiles:
   - Numeric (0-9) - Fastest, for number-only passwords
   - Lowercase (a-z) - For lowercase letter passwords
   - Alphanumeric - Good all-around coverage

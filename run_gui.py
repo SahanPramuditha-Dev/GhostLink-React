@@ -2,10 +2,12 @@
 """
 GHOSTLINK GUI Launcher — run from GhostLink project root.
 """
+import signal
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 
 from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QTimer
 from PySide6.QtGui import QIcon
 from ghostlink.gui.main_window import MainWindow
 
@@ -43,7 +45,33 @@ def main():
     if not app_icon.isNull():
         window.setWindowIcon(app_icon)
     window.show()
-    sys.exit(app.exec())
+
+    shutdown_requested = {"active": False}
+
+    def request_shutdown(*_):
+        if shutdown_requested["active"]:
+            return
+        shutdown_requested["active"] = True
+        window.close()
+        app.quit()
+
+    previous_sigint = signal.getsignal(signal.SIGINT)
+    signal.signal(signal.SIGINT, request_shutdown)
+
+    signal_timer = QTimer()
+    signal_timer.timeout.connect(lambda: None)
+    signal_timer.start(250)
+    app.aboutToQuit.connect(signal_timer.stop)
+
+    try:
+        exit_code = app.exec()
+    except KeyboardInterrupt:
+        request_shutdown()
+        exit_code = 0
+    finally:
+        signal.signal(signal.SIGINT, previous_sigint)
+
+    sys.exit(exit_code)
 
 if __name__ == "__main__":
     main()

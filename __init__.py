@@ -1,10 +1,9 @@
 """
-GHOSTLINK - Wi-Fi Security Testing Framework
-=============================================
-Advanced modular Wi-Fi brute-force system
-Author: Sahan Pramuditha - Educational Use Only
+GhostLink - Authorized Wi-Fi Security Audit Toolkit.
 """
 
-__version__ = "1.0.0"
-__codename__ = "GHOSTLINK"
+from ghostlink.core.version import APP_NAME, APP_VERSION
+
+__version__ = APP_VERSION
+__codename__ = APP_NAME.upper()
 __author__ = "Sahan Pramuditha"

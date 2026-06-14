@@ -11,6 +11,7 @@ GHOSTLINK currently provides both CLI and GUI workflows.
 > Run commands from the project root (the folder that contains `run.py`, `run_gui.py`, `requirements.txt`, and `ghostlink/`).
 
 ### GUI
+- (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& "c:\D\Projects\Python\Wifi Hacker\GhostLink\.venv\Scripts\Activate.ps1")
 - Entry point: `run_gui.py`
 - Main window module: `ghostlink/gui/main_window.py`
 - UI tabs include scan, attack configuration, progress, and recon views.

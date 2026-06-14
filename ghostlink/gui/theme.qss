@@ -1,0 +1,1141 @@
+QWidget {
+    color: {{TEXT}};
+    font-family: 'Segoe UI', 'Inter', 'Arial', sans-serif;
+    font-size: 9pt;
+}
+
+QMainWindow {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 1,
+        stop: 0 {{WIN_A}},
+        stop: 0.45 {{WIN_B}},
+        stop: 1 {{WIN_C}}
+    );
+}
+
+QFrame[role="chrome"] {
+    background: {{CHROME_BG}};
+    border-bottom: 1px solid {{BORDER_STRONG}};
+}
+
+QLabel[role="dot_red"] {
+    color: {{DANGER}};
+    font-size: 11pt;
+}
+
+QLabel[role="dot_yellow"] {
+    color: {{WARNING}};
+    font-size: 11pt;
+}
+
+QLabel[role="dot_green"] {
+    color: {{SUCCESS}};
+    font-size: 11pt;
+}
+
+QLabel[role="chrome_title"] {
+    color: {{ACCENT_HI}};
+    font-weight: 900;
+    letter-spacing: 5px;
+    font-size: 12.5pt;
+}
+
+QLabel[role="chrome_meta"] {
+    color: {{TEXT_MUTED}};
+    font-size: 8pt;
+    font-weight: 700;
+}
+
+QFrame[role="side_nav_panel"] {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 1,
+        stop: 0 {{PANEL}},
+        stop: 1 {{PANEL_ALT}}
+    );
+    border-right: 1px solid {{BORDER}};
+}
+
+QFrame#sidebar_brand {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 0,
+        stop: 0 {{ACCENT_SOFT}},
+        stop: 1 rgba(0, 0, 0, 0)
+    );
+    border: 1px solid {{BORDER_STRONG}};
+    border-radius: 12px;
+}
+
+QLabel[role="sidebar_title"] {
+    color: {{TEXT}};
+    font-size: 14pt;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+}
+
+QLabel[role="sidebar_sub"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8.5pt;
+    font-weight: 600;
+}
+
+QLabel[role="sidebar_badge"] {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{BORDER_STRONG}};
+    border-radius: 10px;
+    color: {{ACCENT_HI}};
+    font-size: 7.5pt;
+    font-weight: 900;
+    padding: 2px 8px;
+}
+
+QListWidget[role="side_nav"] {
+    background: transparent;
+    border: none;
+    outline: 0;
+    color: {{TEXT_SOFT}};
+    padding: 2px;
+}
+
+QListWidget[role="side_nav"]::item {
+    background: transparent;
+    color: {{TEXT_SOFT}};
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 9px 11px;
+    margin: 1px 0;
+    min-height: 20px;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+QListWidget[role="side_nav"]::item:hover {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{BORDER}};
+    color: {{TEXT}};
+}
+
+QListWidget[role="side_nav"]::item:selected {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid {{BORDER_STRONG}};
+    color: {{TEXT}};
+}
+
+QFrame#nav_glow {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 0,
+        stop: 0 {{ACCENT_SOFT}},
+        stop: 1 rgba(0, 0, 0, 0)
+    );
+    border: 1px solid {{BORDER_STRONG}};
+    border-radius: 10px;
+}
+
+QStatusBar {
+    background: {{CHROME_BG}};
+    border-top: 1px solid {{BORDER}};
+    color: {{TEXT_SOFT}};
+}
+
+QTabWidget::pane {
+    background: transparent;
+    border: none;
+}
+
+QLabel[role="title"] {
+    font-size: 15pt;
+    font-weight: 900;
+    color: {{TEXT}};
+}
+
+QLabel[role="subtitle"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8.6pt;
+}
+
+QLabel[role="meta"] {
+    color: {{TEXT_MUTED}};
+    font-size: 8pt;
+}
+
+QLabel[role="pill"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+    color: {{ACCENT_HI}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 2px 8px;
+}
+
+QLabel[role="target_left"] {
+    color: {{TEXT_SOFT}};
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+}
+
+QLabel[role="target_left_ready"] {
+    color: {{SUCCESS}};
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+QLabel[role="target_right"] {
+    color: {{TEXT}};
+    font-size: 10pt;
+    font-weight: 700;
+}
+
+QFrame[role="target_strip"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QFrame[role="target_strip_locked"] {
+    background: {{SUCCESS_SOFT}};
+    border: 1px solid {{SUCCESS}};
+    border-radius: 10px;
+}
+
+QLabel[role="target_alert_idle"] {
+    background: {{DANGER_SOFT}};
+    border: 1px solid {{DANGER}};
+    border-radius: 8px;
+    color: {{DANGER}};
+    font-size: 10pt;
+    font-weight: 800;
+    padding: 10px 14px;
+}
+
+QLabel[role="target_alert_ready"] {
+    background: {{SUCCESS_SOFT}};
+    border: 1px solid {{SUCCESS}};
+    border-radius: 8px;
+    color: {{SUCCESS}};
+    font-size: 10pt;
+    font-weight: 800;
+    padding: 8px 12px;
+}
+
+QLabel[role="stat_card"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+    font-weight: 800;
+    color: {{TEXT_SOFT}};
+    padding: 8px 12px;
+}
+
+QLabel[role="stat_card"][tone="danger"] {
+    color: {{DANGER}};
+    border-color: {{DANGER}};
+}
+
+QLabel[role="stat_value"] {
+    color: {{TEXT}};
+    font-size: 15pt;
+    font-weight: 900;
+}
+
+QLabel[role="stat_mini"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 5px;
+    color: {{TEXT}};
+    font-size: 7.5pt;
+    font-weight: 900;
+    padding: 4px 8px;
+    min-height: 18px;
+}
+
+QLabel[role="summary_card"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 0 10px;
+    min-height: 22px;
+    qproperty-alignment: 'AlignVCenter | AlignLeft';
+}
+
+QLabel[role="summary_card"][tone="normal"] {
+    color: {{TEXT_SOFT}};
+}
+
+QLabel[role="summary_card"][tone="danger"] {
+    background: {{DANGER_SOFT}};
+    border-color: {{DANGER}};
+    color: {{DANGER}};
+}
+
+QLabel[role="summary_card"][tone="warning"] {
+    background: {{WARNING_SOFT}};
+    border-color: {{WARNING}};
+    color: {{WARNING}};
+}
+
+QLabel[role="summary_card"][tone="success"] {
+    background: {{SUCCESS_SOFT}};
+    border-color: {{SUCCESS}};
+    color: {{SUCCESS}};
+}
+
+QLabel[role="badge_warning"] {
+    background: {{WARNING_SOFT}};
+    border: 1px solid {{WARNING}};
+    border-radius: 7px;
+    color: {{WARNING}};
+    font-weight: 800;
+    padding: 6px 10px;
+}
+
+QLabel[role="detail_key"] {
+    color: {{ACCENT_HI}};
+    font-weight: 800;
+}
+
+QLabel[role="detail_value"] {
+    color: {{TEXT}};
+    font-weight: 700;
+}
+
+QLabel[role="detail_badge"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+    color: {{TEXT_SOFT}};
+    font-weight: 900;
+    font-size: 9pt;
+    letter-spacing: 0.5px;
+    padding: 5px 10px;
+}
+
+QLabel[role="detail_badge"][tone="danger"] {
+    background: {{DANGER_SOFT}};
+    border-color: {{DANGER}};
+    color: {{DANGER}};
+}
+
+QLabel[role="detail_badge"][tone="warning"] {
+    background: {{WARNING_SOFT}};
+    border-color: {{WARNING}};
+    color: {{WARNING}};
+}
+
+QLabel[role="detail_badge"][tone="success"] {
+    background: {{SUCCESS_SOFT}};
+    border-color: {{SUCCESS}};
+    color: {{SUCCESS}};
+}
+
+QLabel[role="detail_score_value"] {
+    color: {{TEXT}};
+    font-size: 20pt;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+}
+
+QGroupBox {
+    color: {{TEXT}};
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+    margin-top: 12px;
+    padding-top: 14px;
+    font-weight: 600;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 0 6px;
+    color: {{ACCENT_HI}};
+    font-weight: 900;
+    font-size: 8pt;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+}
+
+QTableWidget,
+QTextEdit {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 9px;
+    color: {{TEXT}};
+    gridline-color: rgba(0, 0, 0, 0);
+    selection-background-color: {{ACCENT_SOFT}};
+    selection-color: {{TEXT}};
+}
+
+QHeaderView::section {
+    background: {{PANEL_ALT}};
+    color: {{TEXT_SOFT}};
+    border: none;
+    border-bottom: 1px solid {{BORDER_STRONG}};
+    padding: 8px;
+    font-weight: 800;
+    font-size: 7.5pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+QTableWidget[role="scan_table"] {
+    alternate-background-color: {{PANEL_SOFT}};
+    selection-background-color: {{ACCENT_SOFT}};
+}
+
+QTableWidget[role="scan_table"]::item {
+    border-bottom: 1px solid {{BORDER}};
+    padding: 6px 8px;
+}
+
+QTableWidget[role="scan_table"]::item:selected {
+    border-left: 4px solid {{ACCENT}};
+}
+
+QLineEdit,
+QSpinBox,
+QComboBox {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    color: {{TEXT}};
+    padding: 7px 10px;
+    min-height: 20px;
+    font-size: 8.5pt;
+}
+
+QLineEdit:focus,
+QSpinBox:focus,
+QComboBox:focus,
+QTextEdit:focus,
+QTableWidget:focus {
+    border: 1px solid {{ACCENT_HI}};
+    background: {{SURFACE_ALT}};
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 26px;
+    border-left: 1px solid {{BORDER}};
+    background: {{SURFACE_ALT}};
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+QComboBox::down-arrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid {{TEXT_SOFT}};
+}
+
+QComboBox QAbstractItemView {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    outline: 0;
+    padding: 4px;
+    color: {{TEXT}};
+    selection-background-color: {{ACCENT_SOFT}};
+    selection-color: {{TEXT}};
+}
+
+QCheckBox {
+    spacing: 6px;
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+}
+
+QCheckBox::indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid {{BORDER_STRONG}};
+    background: {{PANEL_ALT}};
+}
+
+QCheckBox::indicator:checked {
+    background: {{ACCENT}};
+    border: 1px solid {{ACCENT_HI}};
+}
+
+QPushButton {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    color: {{TEXT}};
+    border-radius: 6px;
+    padding: 6px 11px;
+    font-weight: 800;
+    min-height: 18px;
+    font-size: 7.6pt;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+QPushButton:hover {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{BORDER_STRONG}};
+}
+
+QPushButton:pressed {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+QPushButton:disabled {
+    background: {{PANEL}};
+    border: 1px solid {{BORDER}};
+    color: {{TEXT_MUTED}};
+}
+
+QPushButton[variant="secondary"] {
+    color: {{TEXT_SOFT}};
+}
+
+QPushButton[variant="danger"] {
+    background: {{DANGER_SOFT}};
+    border: 1px solid {{DANGER}};
+    color: {{DANGER}};
+}
+
+QPushButton[variant="success"] {
+    background: {{SUCCESS_SOFT}};
+    border: 1px solid {{SUCCESS}};
+    color: {{SUCCESS}};
+}
+
+QPushButton[variant="critical"] {
+    background: {{WARNING_SOFT}};
+    border: 1px solid {{WARNING}};
+    color: {{WARNING}};
+    font-weight: 900;
+}
+
+QPushButton[role="action_primary"] {
+    padding: 10px 18px;
+    font-size: 10pt;
+    font-weight: 900;
+    letter-spacing: 0.9px;
+}
+
+QPushButton[variant="success"][role="action_primary"] {
+    background: {{ACCENT}};
+    border: 1px solid {{ACCENT_HI}};
+    color: {{ON_ACCENT}};
+}
+
+QPushButton[variant="success"][role="action_primary"]:hover {
+    background: {{ACCENT_HI}};
+}
+
+QProgressBar {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    text-align: center;
+    color: {{TEXT}};
+    min-height: 16px;
+    font-weight: 700;
+    font-size: 8pt;
+}
+
+QProgressBar::chunk {
+    border-radius: 5px;
+    background: {{ACCENT}};
+}
+
+QProgressBar[role="progress_bar"] {
+    border-radius: 8px;
+    min-height: 30px;
+    font-size: 10pt;
+    font-weight: 900;
+}
+
+QProgressBar[role="progress_bar"]::chunk {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 0,
+        stop: 0 {{ACCENT}},
+        stop: 1 {{ACCENT_HI}}
+    );
+}
+
+QProgressBar[role="recon_pulse"] {
+    background: {{PANEL}};
+    border: none;
+    border-radius: 2px;
+}
+
+QProgressBar[role="recon_pulse"]::chunk {
+    background: {{ACCENT_HI}};
+    border-radius: 2px;
+}
+
+QFrame[role="metric_card"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QFrame[role="metric_card"][tone="accent"] {
+    border-left: 4px solid {{ACCENT}};
+}
+
+QFrame[role="metric_card"][tone="success"] {
+    border-left: 4px solid {{SUCCESS}};
+}
+
+QFrame[role="metric_card"][tone="warning"] {
+    border-left: 4px solid {{WARNING}};
+}
+
+QFrame[role="metric_card"][tone="neutral"] {
+    border-left: 4px solid {{TEXT_SOFT}};
+}
+
+QLabel[role="metric_caption"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+QLabel[role="metric_value"] {
+    font-size: 16pt;
+    font-weight: 900;
+    color: {{TEXT}};
+}
+
+QLabel[role="metric_value"][tone="accent"] {
+    color: {{ACCENT_HI}};
+}
+
+QLabel[role="metric_value"][tone="success"] {
+    color: {{SUCCESS}};
+}
+
+QLabel[role="metric_value"][tone="warning"] {
+    color: {{WARNING}};
+}
+
+QLabel[role="metric_value"][tone="neutral"] {
+    color: {{TEXT_SOFT}};
+}
+
+QFrame[role="candidate_frame"] {
+    background: {{SUCCESS_SOFT}};
+    border: 1px solid {{SUCCESS}};
+    border-radius: 10px;
+}
+
+QLabel[role="candidate_caption"] {
+    color: {{SUCCESS}};
+    font-size: 9pt;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+QLabel[role="candidate_value"] {
+    color: {{TEXT}};
+    font-family: 'Consolas', monospace;
+    font-size: 14pt;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+QLabel[role="detail_badge"][kind="phase"] {
+    font-size: 10pt;
+    letter-spacing: 1px;
+    min-width: 110px;
+    padding: 6px 12px;
+    qproperty-alignment: 'AlignCenter';
+}
+
+QFrame[role="audit_status_strip"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QLabel[role="audit_target"] {
+    color: {{TEXT}};
+    font-size: 9pt;
+    font-weight: 800;
+}
+
+QLabel[role="audit_status_note"],
+QLabel[role="audit_progress_detail"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8.5pt;
+    font-weight: 700;
+}
+
+QTextEdit[role="audit_log"] {
+    background: {{PANEL}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+    color: {{TEXT}};
+    selection-background-color: {{ACCENT}};
+}
+
+QTextEdit[role="audit_log"][kind="timeline"] {
+    background: {{PANEL_SOFT}};
+}
+
+QFrame[role="recon_running"],
+QFrame[role="recon_sidebar"],
+QFrame[role="recon_output_frame"],
+QFrame[role="recon_summary"],
+QFrame[role="scan_controls_frame"],
+QFrame[role="scan_filters_frame"],
+QFrame[role="hint_strip"],
+QFrame[role="estimate_frame"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QFrame[role="scan_controls_frame"] {
+    background: {{PANEL_SOFT}};
+}
+
+QFrame[role="scan_filters_frame"] {
+    background: {{PANEL}};
+}
+
+QFrame[role="hint_strip"] {
+    background: {{ACCENT_SOFT}};
+}
+
+QLabel[role="scan_headline"] {
+    color: {{ACCENT_HI}};
+    font-size: 9pt;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+QLabel[role="scan_radar_bar"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: {{TEXT_SOFT}};
+    font-family: 'Consolas', monospace;
+    font-size: 8pt;
+}
+
+QLabel[role="empty_title"] {
+    color: {{TEXT}};
+    font-size: 10.5pt;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+}
+
+QLabel[role="estimate_heading"] {
+    color: {{TEXT_SOFT}};
+    font-size: 10pt;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+QLabel[role="estimate_candidates"] {
+    color: {{WARNING}};
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+QLabel[role="estimate_time"] {
+    color: {{ACCENT_HI}};
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+QLabel[role="recon_title"] {
+    color: {{TEXT}};
+    font-size: 15pt;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+}
+
+QLabel[role="recon_subtitle"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8.6pt;
+}
+
+QLabel[role="recon_section_title"] {
+    color: {{TEXT_MUTED}};
+    font-size: 7pt;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+QLabel[role="recon_spinner"] {
+    color: {{ACCENT_HI}};
+    font-size: 12pt;
+    font-weight: 900;
+}
+
+QLabel[role="recon_running_label"] {
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+    font-weight: 700;
+}
+
+QFrame[role="recon_toolbar_frame"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+}
+
+QFrame[role="recon_separator"] {
+    color: {{BORDER}};
+}
+
+QCheckBox[role="recon_toggle"] {
+    font-size: 8.5pt;
+    color: {{TEXT_SOFT}};
+    margin-left: 4px;
+}
+
+QTextEdit[role="recon_output"] {
+    background: {{SURFACE}};
+    border: none;
+    border-radius: 8px;
+    color: {{TEXT}};
+    padding: 6px 8px;
+    selection-background-color: {{ACCENT_SOFT}};
+    selection-color: {{TEXT}};
+}
+
+QLabel[role="recon_pill"] {
+    qproperty-alignment: 'AlignVCenter | AlignHCenter';
+    border-radius: 5px;
+    padding: 0 12px;
+    font-size: 8pt;
+    font-weight: 800;
+    font-family: 'Consolas', monospace;
+}
+
+QLabel[role="recon_pill"][state="active"] {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{BORDER_STRONG}};
+    color: {{ACCENT_HI}};
+}
+
+QLabel[role="recon_pill"][state="idle"] {
+    background: {{PANEL}};
+    border: 1px solid {{BORDER}};
+    color: {{TEXT_MUTED}};
+}
+
+QPushButton[role="mod_btn"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 7px;
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+QPushButton[role="mod_btn"]:hover {
+    background: {{ACCENT_SOFT}};
+    border-color: {{BORDER_STRONG}};
+    color: {{TEXT}};
+}
+
+QPushButton[role="mod_btn_done"] {
+    background: {{SUCCESS_SOFT}};
+    border: 1px solid {{SUCCESS}};
+    border-radius: 7px;
+    color: {{SUCCESS}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+QPushButton[role="mod_btn_error"] {
+    background: {{DANGER_SOFT}};
+    border: 1px solid {{DANGER}};
+    border-radius: 7px;
+    color: {{DANGER}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+QPushButton[role="mod_btn_running"] {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{ACCENT_HI}};
+    border-radius: 7px;
+    color: {{ACCENT_HI}};
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+QPushButton[role="run_all_btn"] {
+    background: {{WARNING_SOFT}};
+    border: 1px solid {{WARNING}};
+    border-radius: 8px;
+    color: {{WARNING}};
+    font-size: 8pt;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 8px 10px;
+}
+
+QPushButton[role="run_all_btn"]:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+QPushButton[role="toolbar_btn"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    color: {{TEXT_SOFT}};
+    font-size: 7.5pt;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    padding: 5px 10px;
+    min-height: 0;
+}
+
+QPushButton[role="toolbar_btn"]:hover {
+    border-color: {{BORDER_STRONG}};
+    color: {{TEXT}};
+}
+
+QPushButton[role="scan_filter"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    color: {{TEXT_SOFT}};
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    padding: 6px 12px;
+    min-height: 20px;
+    min-width: 70px;
+}
+
+QPushButton[role="scan_filter"]:hover {
+    border-color: {{BORDER_STRONG}};
+    color: {{TEXT}};
+}
+
+QPushButton[role="scan_filter"]:checked {
+    background: {{ACCENT_SOFT}};
+    border: 1px solid {{ACCENT_HI}};
+    color: {{ACCENT_HI}};
+}
+
+QPushButton[role="clear_btn"] {
+    background: {{DANGER_SOFT}};
+    border: 1px solid {{DANGER}};
+    border-radius: 6px;
+    color: {{DANGER}};
+    font-size: 7.5pt;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    padding: 4px 9px;
+    min-height: 0;
+}
+
+QSplitter::handle {
+    background: {{PANEL_ALT}};
+}
+
+QSplitter::handle:hover {
+    background: {{ACCENT}};
+}
+
+QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+QScrollBar:vertical {
+    background: rgba(0, 0, 0, 0.08);
+    width: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: {{PANEL_ALT}};
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: {{SURFACE_ALT}};
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QScrollBar:horizontal {
+    background: rgba(0, 0, 0, 0.08);
+    height: 10px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal {
+    background: {{PANEL_ALT}};
+    border-radius: 5px;
+    min-width: 28px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: {{SURFACE_ALT}};
+}
+
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal {
+    width: 0;
+}
+
+QFrame[role="dashboard_hero"] {
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 1,
+        stop: 0 {{SURFACE}},
+        stop: 1 {{PANEL_SOFT}}
+    );
+    border: 1px solid {{BORDER_STRONG}};
+    border-radius: 12px;
+}
+
+QFrame[role="dashboard_activity"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QFrame[role="dashboard_chip"] {
+    background: {{PANEL_ALT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+}
+
+QFrame[role="dashboard_panel"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QFrame[role="scan_table_shell"] {
+    background: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+QLabel[role="dashboard_score_big"] {
+    color: {{ACCENT_HI}};
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+QProgressBar[role="dashboard_score_bar"] {
+    background: {{PANEL}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    min-height: 12px;
+    max-height: 12px;
+}
+
+QProgressBar[role="dashboard_score_bar"]::chunk {
+    border-radius: 5px;
+    background: qlineargradient(
+        x1: 0,
+        y1: 0,
+        x2: 1,
+        y2: 0,
+        stop: 0 {{ACCENT}},
+        stop: 1 {{SUCCESS}}
+    );
+}
+
+QProgressBar[role="dashboard_mix_open"] {
+    background: {{PANEL}};
+    border: none;
+    border-radius: 4px;
+    min-height: 8px;
+    max-height: 8px;
+}
+
+QProgressBar[role="dashboard_mix_open"]::chunk {
+    border-radius: 4px;
+    background: {{DANGER}};
+}
+
+QProgressBar[role="dashboard_mix_secure"] {
+    background: {{PANEL}};
+    border: none;
+    border-radius: 4px;
+    min-height: 8px;
+    max-height: 8px;
+}
+
+QProgressBar[role="dashboard_mix_secure"]::chunk {
+    border-radius: 4px;
+    background: {{SUCCESS}};
+}
+
+QProgressBar[role="dashboard_mix_risk"] {
+    background: {{PANEL}};
+    border: none;
+    border-radius: 4px;
+    min-height: 8px;
+    max-height: 8px;
+}
+
+QProgressBar[role="dashboard_mix_risk"]::chunk {
+    border-radius: 4px;
+    background: {{WARNING}};
+}
+
+QTextEdit[role="dashboard_recommendations"] {
+    background: {{PANEL_SOFT}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+    color: {{TEXT}};
+    padding: 8px 10px;
+    line-height: 1.5;
+}
+
+QLabel[role="summary_card"][tone="neutral"] {
+    background: {{PANEL_ALT}};
+    border-color: {{BORDER}};
+    color: {{TEXT_SOFT}};
+}

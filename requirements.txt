@@ -10,3 +10,5 @@ speedtest-cli>=2.1
 pyside6
 
 pyinstaller
+
+reportlab>=4.0

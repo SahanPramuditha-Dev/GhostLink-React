@@ -6,6 +6,7 @@ All configuration constants and default values.
 
 import os
 from pathlib import Path
+from .version import APP_VERSION, APP_NAME
 
 # System
 SYSTEM = os.name  # 'nt' for Windows, 'posix' for Linux/Mac
@@ -20,16 +21,18 @@ DEFAULT_CHARSET = "0123456789"
 
 # File Paths
 DEFAULT_REPORT = Path("ghostlink_report.json")
+REPORTS_DIR = Path("reports")
 DEFAULT_STATE = Path(".ghostlink_state.json")
 VAULT_PATH = Path(".ghostlink_vault.json")
 PATTERNS_PATH = Path(".ghostlink_patterns.json")
+SETTINGS_PATH = Path(".ghostlink_settings.json")
 
 # Alias
 STATE_FILE = DEFAULT_STATE
 
 # Version
-SCRIPT_VERSION = "1.0.0"
-SCRIPT_CODENAME = "GHOSTLINK"
+SCRIPT_VERSION = APP_VERSION
+SCRIPT_CODENAME = APP_NAME.upper()
 
 # Threading
 MAX_THREADS = 8
