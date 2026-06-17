@@ -28,7 +28,8 @@ import {
   AreaChart,
   Area
 } from 'recharts'
-import { getStatus, getPerformance } from '../api'
+import { getStatus, getPerformance, runReconModule } from '../api'
+import NetworkTopology from '../components/NetworkTopology'
 
 interface ActivityItem {
   id: string
@@ -57,6 +58,7 @@ function Dashboard() {
   const { data: status, loading, execute } = useApi<StatusResponse>()
   const [activities, setActivities] = useState<ActivityItem[]>([])
   const [perfData, setPerfData] = useState<PerfDataPoint[]>([])
+  const [reconData, setReconData] = useState<any>(null)
 
   const fetchDashboardData = useCallback(async () => {
     try {
@@ -92,15 +94,28 @@ function Dashboard() {
     }
   }, [])
 
+  // Fetch recon data for network topology
+  const fetchReconData = useCallback(async () => {
+    try {
+      const data = await execute(() => runReconModule('full'))
+      if (data?.structured) {
+        setReconData(data.structured)
+      }
+    } catch (err) {
+      console.error('Failed to fetch recon data:', err)
+    }
+  }, [execute])
+
   useEffect(() => {
     fetchDashboardData()
     fetchPerformance()
+    fetchReconData()
     // Real-time updates
     const interval = setInterval(() => {
       fetchPerformance()
     }, 3000)
     return () => clearInterval(interval)
-  }, [fetchDashboardData, fetchPerformance])
+  }, [fetchDashboardData, fetchPerformance, fetchReconData])
 
   const quickActions = [
     { path: '/scan', label: 'Scan Networks', icon: Wifi, color: '#22C55E', bgColor: 'rgba(34,197,94,0.1)' },
@@ -202,6 +217,20 @@ function Dashboard() {
           ))
         )}
       </Box>
+
+      {/* Network Topology */}
+      <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)', mb: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+          <Wifi size={24} color="#00F5FF" />
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Network Topology</Typography>
+        </Box>
+        <Box sx={{ height: '450px' }}>
+          <NetworkTopology 
+            devices={reconData?.devices} 
+            networkInfo={reconData?.network} 
+          />
+        </Box>
+      </Paper>
 
       {/* Performance Charts */}
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: 3, mb: 4 }}>
