@@ -566,7 +566,36 @@ def full_network_recon(ports=COMMON_PORTS, port_timeout=DEFAULT_PORT_TIMEOUT,
     arp = read_arp_table()
     if not arp:
         errors.append("ARP table empty — ping sweep may have been blocked.")
-    ips = sorted(arp.keys(), key=lambda x: ipaddress.IPv4Address(x))[:device_scan_limit]
+    
+    # Filter IPs to only include those in the main local network
+    local_network = None
+    if net_info.local_ip and net_info.cidr_prefix:
+        try:
+            local_network = ipaddress.IPv4Network(
+                f"{net_info.local_ip}/{net_info.cidr_prefix}", strict=False)
+        except ValueError:
+            pass
+    
+    filtered_ips = []
+    for ip in arp.keys():
+        try:
+            ip_addr = ipaddress.IPv4Address(ip)
+            # Skip non-device IPs
+            if (ip_addr.is_multicast or 
+                ip_addr.is_loopback or 
+                ip_addr.is_link_local or 
+                ip_addr.is_unspecified or
+                ip.endswith(".0") or 
+                ip.endswith(".255")):
+                continue
+            # Only include IPs in the main local network
+            if local_network and ip_addr not in local_network:
+                continue
+            filtered_ips.append(ip)
+        except (ValueError, TypeError):
+            continue
+    
+    ips = sorted(filtered_ips, key=lambda x: ipaddress.IPv4Address(x))[:device_scan_limit]
     devices: List[DeviceInfo] = []
     lock = threading.Lock()
     def _scan(ip):

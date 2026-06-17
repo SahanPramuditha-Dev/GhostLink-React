@@ -254,6 +254,55 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
       return 'laptop'
     }
 
+    // Function to validate IP (frontend filter)
+    const isValidDevice = (device: Device) => {
+      if (!device.ip) return false
+      const ip = device.ip
+      
+      // Filter out non-device IPs
+      if (
+        ip.startsWith('224.') || // multicast
+        ip.startsWith('239.') || // multicast
+        ip.startsWith('127.') || // loopback
+        ip.startsWith('169.254.') || // link-local
+        ip.endsWith('.0') || // network
+        ip.endsWith('.255') || // broadcast
+        ip === '0.0.0.0'
+      ) {
+        return false
+      }
+      
+      // Also filter out known virtual interfaces
+      const hostname = (device.hostname || '').toLowerCase()
+      if (
+        hostname.includes('virtual') || 
+        hostname.includes('vmware') || 
+        hostname.includes('hyper-v') ||
+        hostname.includes('virtualbox')
+      ) {
+        return false
+      }
+      
+      // Only include devices in the same subnet as the local network
+      if (networkInfo?.local_ip) {
+        const localIpParts = networkInfo.local_ip.split('.')
+        const deviceIpParts = ip.split('.')
+        // Check first 3 octets (assuming /24 subnet, which is most common)
+        if (localIpParts.length >= 3 && deviceIpParts.length >= 3) {
+          if (localIpParts[0] !== deviceIpParts[0] || 
+              localIpParts[1] !== deviceIpParts[1] || 
+              localIpParts[2] !== deviceIpParts[2]) {
+            return false
+          }
+        }
+      }
+      
+      return true
+    }
+
+    // Filter devices first
+    const filteredDevices = (devices || []).filter(isValidDevice)
+
     // Position devices in a grid
     const startX = 450
     const startY = 80
@@ -261,7 +310,7 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
     const gapY = 120
     const devicesPerRow = 3
 
-    devices.forEach((device, index) => {
+    filteredDevices.forEach((device, index) => {
       const deviceId = `device-${index}`
       const row = Math.floor(index / devicesPerRow)
       const col = index % devicesPerRow

@@ -98,9 +98,10 @@ function Dashboard() {
   const fetchReconData = useCallback(async () => {
     try {
       const data = await execute(() => runReconModule('full'))
-      if (data?.structured) {
-        setReconData(data.structured)
-      }
+        console.log('Recon data received:', data?.structured)
+        if (data?.structured) {
+          setReconData(data.structured)
+        }
     } catch (err) {
       console.error('Failed to fetch recon data:', err)
     }
@@ -223,6 +224,20 @@ function Dashboard() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
           <Wifi size={24} color="#00F5FF" />
           <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Network Topology</Typography>
+          <MuiButton 
+            variant="contained" 
+            size="small"
+            onClick={() => fetchReconData()}
+            sx={{
+              ml: 'auto',
+              backgroundColor: 'rgba(0,245,255,0.1)',
+              color: '#00F5FF',
+              border: '1px solid rgba(0,245,255,0.3)',
+              '&:hover': { backgroundColor: 'rgba(0,245,255,0.2)' }
+            }}
+          >
+            Refresh Scan
+          </MuiButton>
         </Box>
         <Box sx={{ height: '450px' }}>
           <NetworkTopology 
