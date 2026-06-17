@@ -422,8 +422,41 @@ def capture_output(func, *args, **kwargs):
 @app.post("/api/recon/full")
 async def recon_full():
     try:
-        result = full_network_recon(do_ping_sweep=False)
+        result = full_network_recon(do_ping_sweep=True)
         output = capture_output(print_recon_result, result)
+        import ipaddress
+        # Filter out non-device IPs (broadcast, multicast, loopback, etc.)
+        filtered_devices = []
+        # Get the local network to filter only same-subnet devices
+        local_network = None
+        if result.network.local_ip and result.network.cidr_prefix:
+            try:
+                local_network = ipaddress.IPv4Network(
+                    f"{result.network.local_ip}/{result.network.cidr_prefix}",
+                    strict=False
+                )
+            except ValueError:
+                pass
+
+        for dev in result.devices:
+            try:
+                ip = ipaddress.IPv4Address(dev.ip)
+                if (
+                    ip.is_multicast
+                    or ip.is_loopback
+                    or ip.is_link_local
+                    or ip.is_unspecified
+                    or dev.ip.endswith(".255")
+                    or dev.ip.endswith(".0")
+                ):
+                    continue
+                # Only include devices in the same local network (if known)
+                if local_network and ip not in local_network:
+                    continue
+                filtered_devices.append(dev)
+            except (ValueError, TypeError):
+                continue
+
         structured = {
             "network": {
                 "local_ip": result.network.local_ip,
@@ -444,7 +477,7 @@ async def recon_full():
                     "device_type": dev.device_type,
                     "scan_time": dev.scan_time
                 }
-                for dev in result.devices
+                for dev in filtered_devices
             ],
             "scan_duration": result.scan_duration_seconds,
             "errors": result.errors
