@@ -19,13 +19,11 @@ import {
   Printer,
   Server,
   Home,
-  ShieldAlert,
-  Lock,
   Globe,
 } from 'lucide-react'
 import { Box, Tooltip, Typography } from '@mui/material'
 
-// Custom node component
+// Custom node component (moved to top, outside NetworkTopology)
 const CustomNode = ({ data, isConnectable }) => {
   const getIcon = () => {
     switch (data.type) {
@@ -172,6 +170,7 @@ const CustomNode = ({ data, isConnectable }) => {
   )
 }
 
+// Define nodeTypes outside the NetworkTopology component (to fix the React Flow warning)
 const nodeTypes = {
   custom: CustomNode,
 }
@@ -204,6 +203,8 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null)
+  const prevInitialNodesRef = useRef<string>('')
+  const prevInitialEdgesRef = useRef<string>('')
 
   // Generate nodes and edges from device data
   const { initialNodes, initialEdges } = useMemo(() => {
@@ -294,10 +295,17 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
     return { initialNodes: generatedNodes, initialEdges: generatedEdges }
   }, [devices, networkInfo])
 
-  // Initialize nodes and edges when data changes
+  // Initialize nodes and edges only when data actually changes
   useEffect(() => {
-    setNodes(initialNodes)
-    setEdges(initialEdges)
+    const newNodesStr = JSON.stringify(initialNodes)
+    const newEdgesStr = JSON.stringify(initialEdges)
+    
+    if (newNodesStr !== prevInitialNodesRef.current || newEdgesStr !== prevInitialEdgesRef.current) {
+      setNodes(initialNodes)
+      setEdges(initialEdges)
+      prevInitialNodesRef.current = newNodesStr
+      prevInitialEdgesRef.current = newEdgesStr
+    }
   }, [initialNodes, initialEdges, setNodes, setEdges])
 
   const onConnect = useCallback(
