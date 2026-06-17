@@ -26,9 +26,29 @@ ghostlink_report.json
 .ghostlink_vault.json
 .ghostlink_settings.json
 .ghostlink_state.json
+ghostlink_logs.json
+ghostlink_reports.json
 
 .env
 .env.local
+.env.*.local
 
 .DS_Store
 Thumbs.db
+
+# React
+web-radar/node_modules/
+web-radar/.next/
+web-radar/out/
+web-radar/build/
+web-radar/.env.local
+web-radar/.env.development.local
+web-radar/.env.test.local
+web-radar/.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

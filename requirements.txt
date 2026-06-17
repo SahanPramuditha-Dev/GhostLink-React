@@ -4,10 +4,15 @@ cryptography>=36.0
 # ── Optional: nicer terminal dashboard ──
 rich>=10.0
 
+# ── Required for performance/resources modules ──
+psutil>=5.9.0
+
 # ── Optional: full speed‑test (download + upload) ──
 speedtest-cli>=2.1
 
-pyside6
+# ── Web API server dependencies ──
+fastapi>=0.110.0
+uvicorn>=0.30.0
 
 pyinstaller
 

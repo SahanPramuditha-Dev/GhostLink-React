@@ -70,29 +70,53 @@ class WiFiScanner:
     @staticmethod
     def _scan_windows(interface: Optional[str] = None) -> List[ScanResult]:
         """Windows network scanning"""
-        # Build the command correctly – always use mode=bssid
-        cmd = ["netsh", "wlan", "show", "networks", "mode=Bssid"]
+        # Primary attempt: mode=Bssid (detailed). If it fails, try a simpler 'show networks' as fallback.
+        attempts = []
+        def _run(cmd):
+            res = run_cmd(cmd, timeout=15)
+            attempts.append((cmd, res))
+            return res
+
+        base_cmd = ["netsh", "wlan", "show", "networks"]
+        cmd = base_cmd + ["mode=Bssid"]
         if interface:
-            # Proper way to pass interface name to netsh
-            cmd.append(f'interface="{interface}"')
-        
-        res = run_cmd(cmd, timeout=15)
+            # When passing via subprocess (no shell), no extra quoting is required
+            cmd_with_interface = cmd + [f'interface={interface}']
+            res = _run(cmd_with_interface)
+        else:
+            res = _run(cmd)
+
+        # If initial attempt failed, try without mode (simpler output) and try alternative interface formatting
         if res.returncode != 0:
-            error_msg = res.stderr.strip() or res.stdout.strip() or "Unknown error (no output)"
-            raise RuntimeError(
-                f"Wi‑Fi scan failed.\n\n{error_msg}\n\n"
-                "Run as Administrator and ensure Wi‑Fi is enabled."
-            )
-        
+            alt_cmds = []
+            if interface:
+                alt_cmds.append(base_cmd + [f'interface={interface}'])
+                alt_cmds.append(base_cmd + [f'interface="{interface}"'])
+            alt_cmds.append(base_cmd)
+            for c in alt_cmds:
+                r = _run(c)
+                if r.returncode == 0:
+                    res = r
+                    break
+
+        if res.returncode != 0:
+            # Collect some diagnostic info for the caller
+            msgs = []
+            for c, r in attempts:
+                out = (r.stdout or "").strip()
+                err = (r.stderr or "").strip()
+                msgs.append(f"Command: {' '.join(c)}\nReturn: {r.returncode}\nStdout:\n{out}\nStderr:\n{err}\n")
+            raise RuntimeError("Wi‑Fi scan failed. Attempts:\n\n" + "\n---\n".join(msgs))
+
         networks = []
         current: Optional[ScanResult] = None
-        
+
         for line in res.stdout.splitlines():
             line = line.strip()
             if not line:
                 current = None
                 continue
-            
+
             # Detect a new SSID line
             if line.lower().startswith("ssid") and "bssid" not in line.lower():
                 try:
@@ -112,7 +136,7 @@ class WiFiScanner:
                         match = re.search(r"(\d+)%?", line)
                         if match:
                             current.signal = int(match.group(1))
-                    elif "authentication" in line.lower():
+                    elif "authentication" in line.lower() or "security" in line.lower():
                         current.security = line.split(":", 1)[1].strip()
                     elif "bssid" in line.lower():
                         current.bssid = line.split(":", 1)[1].strip()
@@ -125,7 +149,7 @@ class WiFiScanner:
                         pass
                 except:
                     pass
-        
+
         # Sort by signal strength descending
         return sorted(networks, key=lambda x: x.signal, reverse=True)
     
