@@ -61,7 +61,7 @@ function LoginPage() {
     >
       <Paper elevation={3} sx={{ maxWidth: 400, width: '100%', p: 4 }}>
         <CardContent>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
+          <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: 'text.primary' }}>
             GHOSTLINK Login
           </Typography>
           {error && (

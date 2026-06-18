@@ -106,7 +106,7 @@ function Attack() {
 
   return (
     <Container maxWidth="xl" disableGutters>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'text.primary' }}>
         Attack Configuration
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>

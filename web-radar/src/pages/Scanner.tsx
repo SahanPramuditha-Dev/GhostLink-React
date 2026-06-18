@@ -83,7 +83,7 @@ function Scanner() {
   return (
     <Container maxWidth="xl" disableGutters>
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
           Target Discovery
         </Typography>
         <Typography variant="subtitle1" color="text.secondary">

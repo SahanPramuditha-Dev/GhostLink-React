@@ -142,6 +142,73 @@ _OUI_TABLE: Dict[str, str] = {
     "00:0a:27": "Apple",       "00:0a:95": "Apple",
     "00:11:24": "Apple",       "00:14:51": "Apple",
     "b0:34:95": "Apple",       "d8:bb:2c": "Apple",
+    "18:74:2e": "Huawei",      "30:3a:3e": "Xiaomi",
+    "34:ab:37": "OnePlus",     "58:cb:52": "LG",
+    "38:f9:d3": "Motorola",    "40:55:82": "Sony Mobile",
+    "00:1e:4a": "Nokia",       "00:18:3a": "HP",
+    "00:1d:92": "Lenovo",      "00:1e:8c": "Acer",
+    "30:85:a9": "MSI",         "d8:5d:e4": "Gigabyte",
+    "00:16:76": "Intel",       "f8:1a:67": "Intel",
+    "d4:3b:04": "Intel",       "00:1b:fc": "Intel",
+    "00:1c:42": "VMware",      "00:50:56": "VMware",
+    "00:0c:29": "VMware",      "00:17:c4": "Broadcom",
+    "00:10:18": "Realtek",     "00:e0:4c": "Realtek",
+    "50:eb:71": "Arris",       "00:1d:aa": "Netgear",
+    "68:7f:74": "Ubiquiti",    "44:d9:e7": "Ubiquiti",
+    "00:15:6d": "Mikrotik",    "00:0c:42": "Cisco",
+    "00:0a:41": "Linksys",     "00:0d:3a": "Amazon",
+    "ac:de:48": "Amazon Echo", "18:59:36": "Nest Labs",
+    "00:24:e4": "Philips",     "00:1b:63": "Apple",
+    "00:1e:52": "Apple",       "00:21:e9": "Apple",
+    "00:23:12": "Apple",       "00:25:00": "Apple",
+    "00:26:bb": "Apple",       "00:26:b0": "Apple",
+    "00:27:10": "Apple",       "00:30:65": "Apple",
+    "00:37:37": "Apple",       "00:3e:e1": "Apple",
+    "00:40:96": "Apple",       "00:50:fc": "Apple",
+    "00:60:57": "Apple",       "00:6d:52": "Apple",
+    "00:71:47": "Apple",       "00:7f:28": "Apple",
+    "00:80:0f": "Apple",       "00:88:65": "Apple",
+    "00:90:33": "Apple",       "00:a0:c9": "Apple",
+    "00:c0:4f": "Apple",       "00:d0:59": "Apple",
+    "00:e0:4c": "Realtek",     "70:85:c2": "Samsung",
+    "74:23:44": "Samsung",     "78:ca:39": "Samsung",
+    "8c:77:12": "Samsung",     "94:10:3c": "Samsung",
+    "98:01:a7": "Samsung",     "a0:48:1c": "Samsung",
+    "a4:08:ea": "Samsung",     "b8:27:eb": "Raspberry Pi",
+    "dc:a6:32": "Raspberry Pi","e4:5f:01": "Raspberry Pi",
+    "e8:4e:06": "Raspberry Pi","2c:f0:a2": "Arduino",
+    "84:cc:a8": "Arduino",     "00:23:a9": "Espressif",
+    "24:0a:c4": "Espressif",   "24:6f:28": "Espressif",
+    "30:ae:a4": "Espressif",   "58:cf:79": "Espressif",
+    "60:01:94": "Espressif",   "84:f3:eb": "Espressif",
+    "ac:0b:fb": "Espressif",   "c4:4f:33": "Espressif",
+    "d8:bf:c0": "Espressif",   "e0:98:06": "Espressif",
+    "f8:f0:05": "Espressif",   "00:1d:09": "Dell",
+    "00:14:22": "Dell",        "00:22:19": "Dell",
+    "00:0e:0c": "Dell",        "00:1c:23": "Dell",
+    "00:21:70": "Dell",        "00:24:e8": "Dell",
+    "00:26:b9": "Dell",        "00:27:0e": "Dell",
+    "00:19:99": "HP",          "00:21:5a": "HP",
+    "00:23:7d": "HP",          "00:24:81": "HP",
+    "00:25:b3": "HP",          "00:26:bb": "HP",
+    "00:1e:67": "Lenovo",      "00:21:6a": "Lenovo",
+    "00:23:8b": "Lenovo",      "00:24:54": "Lenovo",
+    "00:26:c7": "Lenovo",      "00:17:9a": "Asus",
+    "00:1e:8c": "Acer",        "00:19:db": "Acer",
+    "00:22:15": "Acer",        "00:24:1d": "Acer",
+    "00:26:2d": "Acer",        "60:eb:69": "MSI",
+    "40:2c:f4": "Gigabyte",    "00:13:46": "TP-Link",
+    "50:c7:bf": "TP-Link",     "b0:be:76": "TP-Link",
+    "c0:4a:00": "TP-Link",     "d4:6e:0e": "TP-Link",
+    "e0:05:c5": "TP-Link",     "ec:08:6b": "TP-Link",
+    "f8:1a:67": "TP-Link",     "00:0c:42": "Cisco",
+    "00:0f:23": "Cisco",       "00:16:47": "Cisco",
+    "00:1a:a1": "Cisco",       "00:1d:70": "Cisco",
+    "00:23:33": "Cisco",       "00:25:84": "Cisco",
+    "00:0d:3a": "Amazon",      "ac:de:48": "Amazon Echo",
+    "00:17:88": "Philips Hue", "18:b4:30": "Nest Labs",
+    "18:59:36": "Nest Labs",   "00:1e:4a": "Nokia",
+    "58:cb:52": "LG",          "70:85:c2": "Samsung",
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -497,29 +564,86 @@ def get_service_info(ip: str, port: int) -> str:
 
 def _guess_device_type(manufacturer: str, open_ports: List[int],
                         hostname: str) -> str:
-    mfr = manufacturer.lower(); host = hostname.lower()
-    if any(x in mfr for x in ("apple", "samsung", "huawei", "xiaomi", "oneplus")):
+    mfr = manufacturer.lower() if manufacturer else ""
+    host = hostname.lower() if hostname else ""
+    
+    # --- Network Equipment/Router Detection ---
+    # Gateway IP (common ones: .1, .254)
+    if host.endswith(".1") or host.endswith(".254") or "router" in host or "gateway" in host or "modem" in host or "gpon" in host:
+        return "Network Equipment"
+    # Common router ports: DNS(53), HTTP(80), HTTPS(443) often together
+    if 53 in open_ports and (80 in open_ports or 443 in open_ports):
+        return "Network Equipment"
+    
+    # --- Locally Administered MAC Address (often mobile/virtual) ---
+    # First two bytes: 02, 06, 0A, 0E, 22, 26, 2A, 2E, 32, 36, 3A, 3E, etc.
+    # First byte second least significant bit is 1 (locally administered)
+    # Check if manufacturer is Unknown and open ports are mostly email ports (common for some mobile devices)
+    email_ports = [25, 110, 143, 465, 587, 993, 995]
+    common_alt_ports = [8443, 8080, 8000, 8444]  # Common alternative web ports that might be on mobile devices
+    
+    # Count how many ports are NOT email or common alt ports
+    non_email_port_count = sum(1 for p in open_ports if p not in email_ports and p not in common_alt_ports)
+    
+    if mfr == "unknown" and non_email_port_count == 0:
+        return "Mobile / Tablet"
+    
+    # --- Mobile/Tablet Detection ---
+    if any(x in mfr for x in ("apple", "samsung", "huawei", "xiaomi", "oneplus", "google", "lg", "motorola", "nokia", "sony mobile")):
         if 5900 not in open_ports and 3389 not in open_ports:
             return "Mobile / Tablet"
-    if any(x in host for x in ("iphone", "android", "pixel", "galaxy")):
+    if any(x in host for x in ("iphone", "ipad", "android", "pixel", "galaxy", "samsung", "huawei", "xiaomi", "oneplus", "motorola")):
         return "Mobile / Tablet"
-    if any(x in host for x in ("desktop", "laptop", "pc", "workstation")):
+    
+    # --- Computer Detection ---
+    if any(x in host for x in ("desktop", "laptop", "pc", "workstation", "macbook", "imac", "macmini")):
         return "Computer"
-    if any(x in mfr for x in ("raspberry", "arduino", "espressif")):
-        return "Embedded / IoT"
-    if any(x in mfr for x in ("cisco", "netgear", "tp-link", "d-link",
-                                "asus", "ubiquiti", "mikrotik")):
-        return "Network Equipment"
-    if any(x in mfr for x in ("philips", "nest", "amazon echo")):
+    if any(x in mfr for x in ("intel", "amd", "dell", "hp", "lenovo", "asus", "acer", "msi", "gigabyte")):
+        return "Computer"
+    if 3389 in open_ports:  # RDP
+        return "Windows Computer"
+    if 22 in open_ports:  # SSH
+        return "Linux / Unix Host"
+    # If multiple common OS ports are open
+    if (135 in open_ports or 139 in open_ports or 445 in open_ports) and 3389 not in open_ports:
+        return "Computer"
+    
+    # --- Embedded/IoT ---
+    if any(x in mfr for x in ("raspberry", "arduino", "espressif", "tuya", "smartthings", "ring", "nest", "amazon echo", "alexa", "google home", "philips hue", "wemo")):
         return "Smart Home / IoT"
+    
+    # --- Network Equipment ---
+    if any(x in mfr for x in ("cisco", "netgear", "tp-link", "d-link", "asus", "ubiquiti", "mikrotik", "aruba", "juniper", "linksys", "belkin")):
+        return "Network Equipment"
+    
+    # --- Printer Detection ---
     if 9100 in open_ports or 515 in open_ports or 631 in open_ports:
         return "Printer"
-    if 80 in open_ports or 443 in open_ports:
+    if any(x in mfr for x in ("hp", "epson", "canon", "brother", "xerox", "lexmark", "samsung printer")):
+        return "Printer"
+    
+    # --- Server/NAS Detection ---
+    if 445 in open_ports:  # SMB
         return "Server / NAS"
-    if 3389 in open_ports:
-        return "Windows Computer"
-    if 22 in open_ports:
-        return "Linux / Unix Host"
+    if (80 in open_ports or 443 in open_ports) and (21 in open_ports or 22 in open_ports):
+        return "Server / NAS"
+    if any(x in mfr for x in ("synology", "qnap", "western digital", "seagate", "buffalo")):
+        return "Server / NAS"
+    
+    # --- Email Server Detection (only if other server ports present) ---
+    email_port_count = sum(1 for p in open_ports if p in email_ports)
+    if email_port_count >= 2 and non_email_port_count > 0:
+        return "Server / NAS"
+    
+    # --- Fallback: If we have open ports, guess something ---
+    if open_ports:
+        # If it has web ports and other service ports
+        if 80 in open_ports or 443 in open_ports:
+            return "Server / NAS"
+        # If it has just a few common ports, maybe IoT
+        if len(open_ports) <= 3:
+            return "Smart Home / IoT"
+    
     return "Unknown"
 
 def scan_device(ip: str, mac: str = "",

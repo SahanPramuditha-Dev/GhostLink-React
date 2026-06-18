@@ -112,7 +112,7 @@ function Progress() {
     <Container maxWidth="xl">
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4, flexWrap: 'wrap', gap: 2 }}>
         <Box>
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
             Live Telemetry
           </Typography>
           <Typography variant="subtitle1" color="text.secondary">
@@ -154,7 +154,7 @@ function Progress() {
               <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                 Target Network
               </Typography>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>
                 {selectedNetwork.ssid}
               </Typography>
             </Box>
@@ -179,7 +179,7 @@ function Progress() {
       <Paper sx={{ p: 3, mb: 3, borderRadius: 2 }}>
         <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="body1" sx={{ fontWeight: 600 }}>
+            <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary' }}>
               Attack Progress
             </Typography>
             <Typography variant="body1" sx={{ fontWeight: 700, color: '#00BCD4' }}>
@@ -199,7 +199,7 @@ function Progress() {
         {status.current_password && status.running && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
             <Activity size={16} />
-            <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+            <Typography variant="body2" sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>
               Trying: {status.current_password}
             </Typography>
           </Box>
@@ -229,7 +229,7 @@ function Progress() {
                 <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                   {metric.label}
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                <Typography variant="h5" sx={{ fontWeight: 700, color: 'text.primary' }}>
                   {metric.value}
                 </Typography>
               </Box>
@@ -242,7 +242,7 @@ function Progress() {
       <Paper sx={{ p: 3, borderRadius: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
           <Terminal size={24} color="#9C27B0" />
-          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, color: 'text.primary' }}>
             Attack Logs
           </Typography>
         </Box>

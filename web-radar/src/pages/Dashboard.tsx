@@ -18,8 +18,6 @@ import {
   Tooltip
 } from '@mui/material'
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -29,7 +27,7 @@ import {
   Area
 } from 'recharts'
 import { getStatus, getPerformance, runReconModule } from '../api'
-import NetworkTopology from '../components/NetworkTopology'
+import { NetworkTopology } from '../components/NetworkTopology'
 
 interface ActivityItem {
   id: string
@@ -97,11 +95,11 @@ function Dashboard() {
   // Fetch recon data for network topology
   const fetchReconData = useCallback(async () => {
     try {
-      const data = await execute(() => runReconModule('full'))
-        console.log('Recon data received:', data?.structured)
-        if (data?.structured) {
-          setReconData(data.structured)
-        }
+      const data = (await execute(() => runReconModule('full'))) as any
+      console.log('Recon data received:', data?.structured)
+      if (data?.structured) {
+        setReconData(data.structured)
+      }
     } catch (err) {
       console.error('Failed to fetch recon data:', err)
     }
@@ -159,10 +157,10 @@ function Dashboard() {
   return (
     <Container maxWidth="xl" disableGutters sx={{ p: 3 }}>
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 800, mb: 1, color: '#FFFFFF' }}>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 800, mb: 1, color: 'text.primary' }}>
           System Dashboard
         </Typography>
-        <Typography variant="subtitle1" color="#94A3B8">
+        <Typography variant="subtitle1" color="text.secondary">
           Overview and quick access to all features
         </Typography>
       </Box>
@@ -171,8 +169,8 @@ function Dashboard() {
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3, mb: 4 }}>
         {loading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <Paper key={i} sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <Skeleton variant="rectangular" height={100} sx={{ backgroundColor: 'rgba(255,255,255,0.05)' }} />
+            <Paper key={i} sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1 }}>
+              <Skeleton variant="rectangular" height={100} />
             </Paper>
           ))
         ) : (
@@ -182,8 +180,9 @@ function Dashboard() {
               sx={{
                 p: 3,
                 borderRadius: 3,
-                backgroundColor: 'rgba(15,23,42,0.9)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                backgroundColor: 'background.paper',
+                border: 1,
+                borderColor: 'divider',
                 transition: 'transform 0.2s, box-shadow 0.2s, border-color 0.2s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
@@ -203,15 +202,15 @@ function Dashboard() {
                   <card.icon size={28} color={card.color} />
                 </Box>
                 <Box sx={{ flex: 1 }}>
-                  <Typography variant="caption" color="#94A3B8" sx={{ textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700 }}>
+                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700 }}>
                     {card.label}
                   </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: 700, mt: 0.5, color: '#FFFFFF' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mt: 0.5, color: 'text.primary' }}>
                     {card.value}
                   </Typography>
                 </Box>
               </Box>
-              <Typography variant="body2" color="#94A3B8">
+              <Typography variant="body2" color="text.secondary">
                 {card.secondary}
               </Typography>
             </Paper>
@@ -220,10 +219,10 @@ function Dashboard() {
       </Box>
 
       {/* Network Topology */}
-      <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)', mb: 4 }}>
+      <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider', mb: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
           <Wifi size={24} color="#00F5FF" />
-          <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Network Topology</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>Network Topology</Typography>
           <MuiButton 
             variant="contained" 
             size="small"
@@ -250,10 +249,10 @@ function Dashboard() {
       {/* Performance Charts */}
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: 3, mb: 4 }}>
         {/* Main Performance Chart */}
-        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
             <Activity size={24} color="#00F5FF" />
-            <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Real-time Performance</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>Real-time Performance</Typography>
           </Box>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={perfData}>
@@ -267,12 +266,12 @@ function Dashboard() {
                   <stop offset="95%" stopColor="#A855F7" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="time" stroke="#94A3B8" tick={{ fill: '#94A3B8' }} />
-              <YAxis stroke="#94A3B8" tick={{ fill: '#94A3B8' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="divider" />
+              <XAxis dataKey="time" stroke="text.secondary" tick={{ fill: 'text.secondary' }} />
+              <YAxis stroke="text.secondary" tick={{ fill: 'text.secondary' }} />
               <RechartsTooltip
-                contentStyle={{ backgroundColor: 'rgba(15,23,42,0.95)', border: '1px solid rgba(0,245,255,0.3)', borderRadius: '8px' }}
-                itemStyle={{ color: '#E0E7FF' }}
+                contentStyle={{ backgroundColor: 'background.paper', border: '1px solid rgba(0,245,255,0.3)', borderRadius: '8px' }}
+                itemStyle={{ color: 'text.primary' }}
               />
               <Area type="monotone" dataKey="cpu" stroke="#00F5FF" fillOpacity={1} fill="url(#colorCpu)" name="CPU" />
               <Area type="monotone" dataKey="memory" stroke="#A855F7" fillOpacity={1} fill="url(#colorMemory)" name="Memory" />
@@ -282,15 +281,15 @@ function Dashboard() {
 
         {/* Quick Stats Cards */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <Cpu size={20} color="#00F5FF" />
-              <Typography variant="body2" color="#94A3B8" sx={{ fontWeight: 600 }}>CPU Usage</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>CPU Usage</Typography>
             </Box>
-            <Typography variant="h3" sx={{ color: '#E0E7FF', fontWeight: 800, mb: 1 }}>
+            <Typography variant="h3" sx={{ color: 'text.primary', fontWeight: 800, mb: 1 }}>
               {perfData[perfData.length - 1]?.cpu}%
             </Typography>
-            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 4, overflow: 'hidden' }}>
+            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 4, overflow: 'hidden' }}>
               <Box
                 sx={{
                   height: '100%',
@@ -303,15 +302,15 @@ function Dashboard() {
             </Box>
           </Paper>
           
-          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <MemoryStick size={20} color="#A855F7" />
-              <Typography variant="body2" color="#94A3B8" sx={{ fontWeight: 600 }}>Memory Usage</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>Memory Usage</Typography>
             </Box>
-            <Typography variant="h3" sx={{ color: '#E0E7FF', fontWeight: 800, mb: 1 }}>
+            <Typography variant="h3" sx={{ color: 'text.primary', fontWeight: 800, mb: 1 }}>
               {perfData[perfData.length - 1]?.memory}%
             </Typography>
-            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 4, overflow: 'hidden' }}>
+            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 4, overflow: 'hidden' }}>
               <Box
                 sx={{
                   height: '100%',
@@ -324,15 +323,15 @@ function Dashboard() {
             </Box>
           </Paper>
 
-          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <HardDrive size={20} color="#22C55E" />
-              <Typography variant="body2" color="#94A3B8" sx={{ fontWeight: 600 }}>Network Activity</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>Network Activity</Typography>
             </Box>
-            <Typography variant="h3" sx={{ color: '#E0E7FF', fontWeight: 800, mb: 1 }}>
+            <Typography variant="h3" sx={{ color: 'text.primary', fontWeight: 800, mb: 1 }}>
               {perfData[perfData.length - 1]?.network}%
             </Typography>
-            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 4, overflow: 'hidden' }}>
+            <Box sx={{ width: '100%', height: 8, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 4, overflow: 'hidden' }}>
               <Box
                 sx={{
                   height: '100%',
@@ -348,10 +347,10 @@ function Dashboard() {
       </Box>
 
       {/* Quick Actions */}
-      <Paper sx={{ p: 3, mb: 4, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <Paper sx={{ p: 3, mb: 4, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
           <Terminal size={24} color="#00F5FF" />
-          <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Quick Actions</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>Quick Actions</Typography>
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
           {quickActions.map((action, i) => (
@@ -386,24 +385,24 @@ function Dashboard() {
       </Paper>
 
       {/* Recent Recon History and Activity */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, gap: 3 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, gap: 3, alignItems: 'start' }}>
         {/* Recent Recon History */}
-        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
             <Eye size={24} color="#00BCD4" />
-            <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Recent Recon History</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>Recent Recon History</Typography>
           </Box>
           <List disablePadding>
             {recentReconHistory.map((item) => (
-              <ListItem key={item.id} sx={{ px: 0, py: 1.5, borderRadius: 2, mb: 1, backgroundColor: 'rgba(255,255,255,0.02)', '&:hover': { backgroundColor: 'rgba(255,255,255,0.05)' } }}>
-                <Box sx={{ flex: 1 }}>
+              <ListItem key={item.id} sx={{ p: 2, borderRadius: 2, mb: 1, backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+                <Box sx={{ flex: 1, px: 1 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
-                    <Typography variant="body1" sx={{ fontWeight: 700, color: '#E0E7FF' }}>{item.module}</Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 700, color: 'text.primary' }}>{item.module}</Typography>
                     <Chip label={item.status} size="small" sx={{ backgroundColor: item.status === 'Success' ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)', color: item.status === 'Success' ? '#22C55E' : '#F59E0B', fontWeight: 700, border: `1px solid ${item.status === 'Success' ? 'rgba(34,197,94,0.3)' : 'rgba(245,158,11,0.3)'}` }} />
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="body2" color="#94A3B8">{item.result}</Typography>
-                    <Typography variant="caption" color="#64748B">{item.time}</Typography>
+                    <Typography variant="body2" color="text.secondary">{item.result}</Typography>
+                    <Typography variant="caption" color="text.secondary">{item.time}</Typography>
                   </Box>
                 </Box>
               </ListItem>
@@ -412,33 +411,33 @@ function Dashboard() {
         </Paper>
 
         {/* Recent Activity */}
-        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
             <Clock size={24} color="#A855F7" />
-            <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>Recent Activity</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>Recent Activity</Typography>
           </Box>
           {loading ? (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Skeleton variant="rectangular" height={60} sx={{ backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 2 }} />
-              <Skeleton variant="rectangular" height={60} sx={{ backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 2 }} />
-              <Skeleton variant="rectangular" height={60} sx={{ backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 2 }} />
+              <Skeleton variant="rectangular" height={60} sx={{ borderRadius: 2 }} />
+              <Skeleton variant="rectangular" height={60} sx={{ borderRadius: 2 }} />
+              <Skeleton variant="rectangular" height={60} sx={{ borderRadius: 2 }} />
             </Box>
           ) : activities.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 6 }}>
-              <Activity size={48} color="#64748B" style={{ opacity: 0.5, marginBottom: 16 }} />
-              <Typography variant="h6" sx={{ mt: 2, color: '#94A3B8' }}>
+              <Activity size={48} color="text.secondary" style={{ opacity: 0.5, marginBottom: 16 }} />
+              <Typography variant="h6" sx={{ mt: 2, color: 'text.secondary' }}>
                 No recent activity
               </Typography>
-              <Typography variant="body2" color="#64748B">
+              <Typography variant="body2" color="text.secondary">
                 Activity will appear here as you use the system
               </Typography>
             </Box>
           ) : (
             <List disablePadding>
               {activities.map((item) => (
-                <ListItem key={item.id} sx={{ px: 0, py: 1.5, borderRadius: 2, mb: 1, '&:hover': { backgroundColor: 'rgba(255,255,255,0.03)' } }}>
+                <ListItem key={item.id} sx={{ p: 2, borderRadius: 2, mb: 1, backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
                   <ListItemIcon sx={{ minWidth: 40 }}>
-                    {item.type === 'success' && <CheckCircle size={20} color="#22C55E" />}
+                    {item.type === 'success' && <CheckCircle2 size={20} color="#22C55E" />}
                     {item.type === 'error' && <AlertCircle size={20} color="#EF4444" />}
                     {item.type === 'warning' && <AlertCircle size={20} color="#F59E0B" />}
                     {item.type === 'info' && <Activity size={20} color="#00F5FF" />}
@@ -446,7 +445,7 @@ function Dashboard() {
                   <ListItemText
                     primary={
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-                        <Typography variant="body1" sx={{ fontWeight: 600, color: '#E0E7FF' }}>
+                        <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary' }}>
                           {item.title}
                         </Typography>
                         <Chip
@@ -457,7 +456,7 @@ function Dashboard() {
                       </Box>
                     }
                     secondary={item.message}
-                    sx={{ '& .MuiListItemText-secondary': { color: '#94A3B8' } }}
+                    sx={{ '& .MuiListItemText-secondary': { color: 'text.secondary' } }}
                   />
                 </ListItem>
               ))}
@@ -468,14 +467,14 @@ function Dashboard() {
 
       {/* System Info */}
       <Box sx={{ mt: 4 }}>
-        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper', border: 1, borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
             <Users size={24} color="#9C27B0" />
-            <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>System Info</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>System Info</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="body2" color="#94A3B8">
+              <Typography variant="body2" color="text.secondary">
                 Backend Status
               </Typography>
               <Chip
@@ -485,16 +484,16 @@ function Dashboard() {
               />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="body2" color="#94A3B8">
+              <Typography variant="body2" color="text.secondary">
                 Frontend Version
               </Typography>
-              <Typography variant="body2" sx={{ color: '#E0E7FF' }}>1.0.0</Typography>
+              <Typography variant="body2" sx={{ color: 'text.primary' }}>1.0.0</Typography>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="body2" color="#94A3B8">
+              <Typography variant="body2" color="text.secondary">
                 Last Updated
               </Typography>
-              <Typography variant="body2" sx={{ color: '#E0E7FF' }}>{new Date().toLocaleTimeString()}</Typography>
+              <Typography variant="body2" sx={{ color: 'text.primary' }}>{new Date().toLocaleTimeString()}</Typography>
             </Box>
           </Box>
         </Paper>

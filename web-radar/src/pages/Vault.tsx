@@ -150,7 +150,7 @@ function Vault() {
     <Container maxWidth="xl" disableGutters>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4, flexWrap: 'wrap', gap: 2 }}>
         <Box>
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>
             Password Vault
           </Typography>
           <Typography variant="subtitle1" color="text.secondary">
@@ -231,8 +231,8 @@ function Vault() {
           </Box>
         ) : vault.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8, px: 2 }}>
-            <Shield size={64} color="rgba(255,255,255,0.3)" />
-            <Typography variant="h5" sx={{ mt: 3, fontWeight: 600 }}>
+            <Shield size={64} color="text.secondary" />
+            <Typography variant="h5" sx={{ mt: 3, fontWeight: 600, color: 'text.primary' }}>
               Vault is Empty
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mt: 1, maxWidth: 400, mx: 'auto' }}>
@@ -241,8 +241,8 @@ function Vault() {
           </Box>
         ) : filteredVault.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8, px: 2 }}>
-            <AlertCircle size={64} color="rgba(255,255,255,0.3)" />
-            <Typography variant="h5" sx={{ mt: 3, fontWeight: 600 }}>
+            <AlertCircle size={64} color="text.secondary" />
+            <Typography variant="h5" sx={{ mt: 3, fontWeight: 600, color: 'text.primary' }}>
               No Results Found
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
@@ -254,10 +254,10 @@ function Vault() {
             <Table>
               <TableHead sx={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>SSID</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Password</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>Saved On</TableCell>
-                  <TableCell sx={{ fontWeight: 700, textAlign: 'right' }}>Actions</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary' }}>SSID</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary' }}>Password</TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: 'text.primary' }}>Saved On</TableCell>
+                  <TableCell sx={{ fontWeight: 700, textAlign: 'right', color: 'text.primary' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -266,7 +266,7 @@ function Vault() {
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                         <Shield size={18} color="#4CAF50" />
-                        <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                        <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary' }}>
                           {entry.ssid}
                         </Typography>
                       </Box>
@@ -274,7 +274,7 @@ function Vault() {
                     <TableCell>
                       <Typography
                         variant="body1"
-                        sx={{ fontFamily: 'monospace' }}
+                        sx={{ fontFamily: 'monospace', color: 'text.primary' }}
                       >
                         {showPasswords ? entry.password : '•'.repeat(Math.min(entry.password.length, 20))}
                       </Typography>

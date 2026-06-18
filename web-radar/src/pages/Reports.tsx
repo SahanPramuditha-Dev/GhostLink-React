@@ -20,7 +20,7 @@ function Reports() {
 
   return (
     <Container maxWidth="xl" disableGutters>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'text.primary' }}>
         Reports
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
@@ -30,9 +30,9 @@ function Reports() {
       {reports.length === 0 ? (
         <Paper sx={{ p: 6, textAlign: 'center' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-            <FileText size={64} color="rgba(255,255,255,0.3)" />
+            <FileText size={64} color="text.secondary" />
           </Box>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom color="text.primary">
             No Reports
           </Typography>
           <Typography color="text.secondary">
@@ -62,28 +62,28 @@ function Reports() {
                   </Box>
 
                   <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom color="text.primary">
                       {report.ssid}
                     </Typography>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mt: 1, flexWrap: 'wrap' }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
                         <Calendar size={16} />
-                        <Typography variant="body2">
+                        <Typography variant="body2" color="text.secondary">
                           {new Date(report.timestamp).toLocaleDateString()} {new Date(report.timestamp).toLocaleTimeString()}
                         </Typography>
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
                         <Hash size={16} />
-                        <Typography variant="body2">
+                        <Typography variant="body2" color="text.secondary">
                           {report.attempts.toLocaleString()} attempts
                         </Typography>
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
                         <Clock size={16} />
-                        <Typography variant="body2">
+                        <Typography variant="body2" color="text.secondary">
                           {formatDuration(report.elapsed)}
                         </Typography>
                       </Box>

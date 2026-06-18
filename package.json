@@ -1,0 +1,55 @@
+{
+  "name": "ghostlink-desktop",
+  "version": "1.0.0",
+  "description": "WiFi security assessment tool",
+  "author": "GHOSTLINK Contributors",
+  "main": "electron/main.js",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install && npm run frontend:install && npm run backend:install",
+    "frontend:install": "cd web-radar && npm install",
+    "frontend:dev": "cd web-radar && npm run dev",
+    "frontend:build": "cd web-radar && npm run build",
+    "backend:install": "python -m venv .venv && .venv\\Scripts\\pip install -r backend\\requirements.txt",
+    "dev": "concurrently \"npm:frontend:dev\" \"electron .\"",
+    "build-backend": "powershell -ExecutionPolicy Bypass -File scripts\\build-backend.ps1",
+    "build": "npm run frontend:build && npm run build-backend && electron-builder"
+  },
+  "build": {
+    "appId": "com.ghostlink.app",
+    "productName": "GHOSTLINK",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "web-radar/dist/**",
+      "electron/**",
+      "scripts/ghostlink.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/dist/main.exe",
+        "to": "backend/main.exe"
+      }
+    ],
+    "win": {
+      "target": ["nsis"],
+      "certificateFile": null,
+      "sign": null,
+      "icon": "scripts/ghostlink.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "scripts/ghostlink.ico",
+      "uninstallerIcon": "scripts/ghostlink.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "26.2.0",
+    "electron-builder": "^24.6.0",
+    "concurrently": "^8.2.0"
+  }
+}

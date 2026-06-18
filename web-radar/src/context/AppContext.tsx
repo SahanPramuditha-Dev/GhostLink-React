@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { WifiNetwork, AttackConfig, VaultEntry, Report } from '../types';
 import { getVault, addReport as addReportApi, checkAdmin, getReports } from '../api';
+import { ThemeProvider } from '@mui/material/styles';
+import { darkTheme, lightTheme } from '../theme';
 
 interface AppContextType {
   selectedNetwork: WifiNetwork | null;
@@ -17,11 +19,18 @@ interface AppContextType {
   setIsAdmin: (admin: boolean) => void;
   snackbar: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning'; };
   setSnackbar: (snackbar: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning'; } | ((prev: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning'; }) => { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning'; })) => void;
+  themeMode: 'light' | 'dark';
+  toggleThemeMode: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  // Get saved theme mode from localStorage, or default to 'dark'
+  const [themeMode, setThemeMode] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('ghostlink_theme_mode');
+    return (saved as 'light' | 'dark') || 'dark';
+  });
   const [selectedNetwork, setSelectedNetwork] = useState<WifiNetwork | null>(null);
   const [attackConfig, setAttackConfig] = useState<AttackConfig>({
     ssid: '',
@@ -45,6 +54,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     message: '',
     severity: 'info',
   });
+
+  // Toggle theme mode and save to localStorage
+  const toggleThemeMode = () => {
+    setThemeMode((prev) => {
+      const newMode = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('ghostlink_theme_mode', newMode);
+      return newMode;
+    });
+  };
 
   // Load initial data from backend
   useEffect(() => {
@@ -82,30 +100,37 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Select current theme based on themeMode
+  const currentTheme = themeMode === 'dark' ? darkTheme : lightTheme;
+
   return (
-    <AppContext.Provider
-      value={{
-        selectedNetwork,
-        setSelectedNetwork,
-        attackConfig,
-        setAttackConfig,
-        vault,
-        setVault,
-        addVaultEntry,
-        reports,
-        addReport,
-        isAdmin,
-        setIsAdmin,
-        snackbar,
-        setSnackbar,
-      }}
-    >
-      {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <div>Loading...</div>
-        </div>
-      ) : children}
-    </AppContext.Provider>
+    <ThemeProvider theme={currentTheme}>
+      <AppContext.Provider
+        value={{
+          selectedNetwork,
+          setSelectedNetwork,
+          attackConfig,
+          setAttackConfig,
+          vault,
+          setVault,
+          addVaultEntry,
+          reports,
+          addReport,
+          isAdmin,
+          setIsAdmin,
+          snackbar,
+          setSnackbar,
+          themeMode,
+          toggleThemeMode,
+        }}
+      >
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div>Loading...</div>
+          </div>
+        ) : children}
+      </AppContext.Provider>
+    </ThemeProvider>
   );
 }
 

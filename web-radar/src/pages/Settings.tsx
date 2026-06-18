@@ -17,8 +17,7 @@ import {
 } from '@mui/material';
 
 function SettingsPage() {
-  const { setSnackbar, attackConfig, setAttackConfig } = useAppContext();
-  const [theme, setTheme] = useState('dark');
+  const { setSnackbar, attackConfig, setAttackConfig, themeMode, toggleThemeMode } = useAppContext();
   const [interfaceName, setInterfaceName] = useState('wlan0');
   const [notificationsAttack, setNotificationsAttack] = useState(true);
   const [notificationsPassword, setNotificationsPassword] = useState(true);
@@ -33,7 +32,6 @@ function SettingsPage() {
   };
 
   const handleReset = () => {
-    setTheme('dark');
     setInterfaceName('wlan0');
     setNotificationsAttack(true);
     setNotificationsPassword(true);
@@ -56,7 +54,7 @@ function SettingsPage() {
 
   return (
     <Container maxWidth="xl" disableGutters>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'text.primary' }}>
         Settings
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
@@ -68,19 +66,18 @@ function SettingsPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <Palette size={24} color="#9C27B0" />
-            <Typography variant="h6">Appearance</Typography>
+            <Typography variant="h6" color="text.primary">Appearance</Typography>
           </Box>
           <FormControl fullWidth>
             <InputLabel id="theme-select-label">Theme</InputLabel>
             <Select
               labelId="theme-select-label"
-              value={theme}
+              value={themeMode}
               label="Theme"
-              onChange={(e) => setTheme(e.target.value as string)}
+              onChange={() => toggleThemeMode()}
             >
               <MenuItem value="light">Light</MenuItem>
               <MenuItem value="dark">Dark</MenuItem>
-              <MenuItem value="system">System</MenuItem>
             </Select>
           </FormControl>
         </Paper>
@@ -89,7 +86,7 @@ function SettingsPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <Wifi size={24} color="#00BCD4" />
-            <Typography variant="h6">Network</Typography>
+            <Typography variant="h6" color="text.primary">Network</Typography>
           </Box>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel id="interface-select-label">Wireless Interface</InputLabel>
@@ -104,9 +101,9 @@ function SettingsPage() {
               <MenuItem value="eth0">eth0</MenuItem>
             </Select>
           </FormControl>
-          <Typography variant="subtitle2" gutterBottom>Default Attack Config</Typography>
+          <Typography variant="subtitle2" gutterBottom color="text.primary">Default Attack Config</Typography>
           <FormControl fullWidth sx={{ mb: 1 }}>
-            <Typography gutterBottom>Password Length Range</Typography>
+            <Typography gutterBottom color="text.primary">Password Length Range</Typography>
             <Slider
               value={[attackConfig.minlen, attackConfig.maxlen]}
               onChange={(_, value) => {
@@ -119,7 +116,7 @@ function SettingsPage() {
             />
           </FormControl>
           <FormControl fullWidth sx={{ mb: 1 }}>
-            <Typography gutterBottom>Threads: {attackConfig.threads}</Typography>
+            <Typography gutterBottom color="text.primary">Threads: {attackConfig.threads}</Typography>
             <Slider
               value={attackConfig.threads}
               onChange={(_, value) => setAttackConfig({ ...attackConfig, threads: value as number })}
@@ -128,7 +125,7 @@ function SettingsPage() {
             />
           </FormControl>
           <FormControl fullWidth sx={{ mb: 1 }}>
-            <Typography gutterBottom>Timeout (seconds): {attackConfig.timeout}</Typography>
+            <Typography gutterBottom color="text.primary">Timeout (seconds): {attackConfig.timeout}</Typography>
             <Slider
               value={attackConfig.timeout}
               onChange={(_, value) => setAttackConfig({ ...attackConfig, timeout: value as number })}
@@ -151,7 +148,7 @@ function SettingsPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <Bell size={24} color="#FF9800" />
-            <Typography variant="h6">Notifications</Typography>
+            <Typography variant="h6" color="text.primary">Notifications</Typography>
           </Box>
           <FormControlLabel
             control={
@@ -185,7 +182,7 @@ function SettingsPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <Shield size={24} color="#4CAF50" />
-            <Typography variant="h6">Security</Typography>
+            <Typography variant="h6" color="text.primary">Security</Typography>
           </Box>
           <FormControlLabel
             control={
@@ -205,11 +202,11 @@ function SettingsPage() {
         {/* About */}
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-            <Info size={24} color="rgba(255,255,255,0.6)" />
-            <Typography variant="h6">About</Typography>
+            <Info size={24} color="text.secondary" />
+            <Typography variant="h6" color="text.primary">About</Typography>
           </Box>
           <Box sx={{ textAlign: 'center', py: 2 }}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1, color: 'text.primary' }}>
               GhostLink
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 1 }}>

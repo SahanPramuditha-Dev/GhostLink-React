@@ -20,7 +20,7 @@ function HelpPage() {
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ color: 'text.primary' }}>
         Help & Info
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
@@ -31,14 +31,14 @@ function HelpPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
             <HelpCircle size={24} color="#00BCD4" />
-            <Typography variant="h6">Quick Start</Typography>
+            <Typography variant="h6" color="text.primary">Quick Start</Typography>
           </Box>
           <Accordion>
             <AccordionSummary>
-              <Typography>How to scan for Wi‑Fi networks?</Typography>
+              <Typography color="text.primary">How to scan for Wi‑Fi networks?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography color="text.secondary">
                 Go to the Scan page, click on Scan Networks, and select a target network.
                 Make sure you have appropriate permissions.
               </Typography>
@@ -46,10 +46,10 @@ function HelpPage() {
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Typography>How to start an attack?</Typography>
+              <Typography color="text.primary">How to start an attack?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography color="text.secondary">
                 Select a target network, go to the Attack page, configure your settings,
                 and click Start Attack.
               </Typography>
@@ -57,10 +57,10 @@ function HelpPage() {
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Typography>What are the attack profiles?</Typography>
+              <Typography color="text.primary">What are the attack profiles?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography color="text.secondary">
                 Preconfigured character sets for different scenarios: Numeric PINs (digits),
                 Lowercase, Lower+Numeric, Alphanumeric, and Full Charset.
               </Typography>
@@ -68,10 +68,10 @@ function HelpPage() {
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Typography>Frequently Asked Questions (FAQ)</Typography>
+              <Typography color="text.primary">Frequently Asked Questions (FAQ)</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography color="text.secondary">
                 Always make sure you have explicit, written permission before testing any
                 network that you don't own or operate.
               </Typography>
@@ -82,8 +82,8 @@ function HelpPage() {
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Info size={24} color="rgba(255,255,255,0.6)" />
-              <Typography variant="h6">About GhostLink</Typography>
+              <Info size={24} color="text.secondary" />
+              <Typography variant="h6" color="text.primary">About GhostLink</Typography>
             </Box>
             <MuiButton variant="contained" onClick={() => setAboutOpen(true)}>
               Show About
@@ -96,7 +96,7 @@ function HelpPage() {
       <Dialog open={aboutOpen} onClose={() => setAboutOpen(false)}>
         <DialogTitle>About GhostLink</DialogTitle>
         <DialogContent sx={{ textAlign: 'center', py: 3 }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1 }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1, color: 'text.primary' }}>
             GhostLink
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 1 }}>

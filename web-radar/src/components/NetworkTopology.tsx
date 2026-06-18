@@ -10,6 +10,7 @@ import ReactFlow, {
   Position,
   MarkerType,
 } from 'reactflow'
+import type { NodeProps } from 'reactflow'
 import 'reactflow/dist/style.css'
 import {
   Wifi,
@@ -21,116 +22,176 @@ import {
   Home,
   Globe,
 } from 'lucide-react'
-import { Box, Tooltip, Typography } from '@mui/material'
+import { Box, Tooltip, Typography, keyframes } from '@mui/material'
+import { DeviceDetailsModal } from './DeviceDetailsModal'
+
+// Keyframe animations
+const pulse = keyframes`
+  0% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 245, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0); }
+`
+
+const float = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+`
+
+const glow = keyframes`
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+`
 
 // Custom node component (moved to top, outside NetworkTopology)
-const CustomNode = ({ data, isConnectable }) => {
+interface CustomNodeData {
+  label: string
+  type?: string
+  deviceType?: string
+  ip?: string
+  mac?: string
+  manufacturer?: string
+  openPorts?: number[]
+  fullDevice?: any
+  onClick?: () => void
+}
+const CustomNode = ({ data, isConnectable, selected }: NodeProps<CustomNodeData>) => {
   const getIcon = () => {
     switch (data.type) {
       case 'router':
-        return <Router size={24} color="#00F5FF" />
+        return <Router size={28} color="#00F5FF" />
       case 'laptop':
-        return <Laptop size={24} color="#22C55E" />
+        return <Laptop size={28} color="#22C55E" />
       case 'mobile':
-        return <Smartphone size={24} color="#A855F7" />
+        return <Smartphone size={28} color="#A855F7" />
       case 'printer':
-        return <Printer size={24} color="#F59E0B" />
+        return <Printer size={28} color="#F59E0B" />
       case 'server':
-        return <Server size={24} color="#EF4444" />
+        return <Server size={28} color="#EF4444" />
       case 'iot':
-        return <Home size={24} color="#06B6D4" />
+        return <Home size={28} color="#06B6D4" />
       case 'internet':
-        return <Globe size={24} color="#FFFFFF" />
+        return <Globe size={28} color="#FFFFFF" />
       default:
-        return <Wifi size={24} color="#64748B" />
+        return <Wifi size={28} color="#64748B" />
     }
   }
 
-  const getBgColor = () => {
+  const getColors = () => {
     switch (data.type) {
       case 'router':
-        return 'rgba(0, 245, 255, 0.1)'
+        return {
+          bg: 'rgba(0, 245, 255, 0.15)',
+          border: '#00F5FF',
+          shadow: 'rgba(0, 245, 255, 0.6)'
+        }
       case 'laptop':
-        return 'rgba(34, 197, 94, 0.1)'
+        return {
+          bg: 'rgba(34, 197, 94, 0.15)',
+          border: '#22C55E',
+          shadow: 'rgba(34, 197, 94, 0.6)'
+        }
       case 'mobile':
-        return 'rgba(168, 85, 247, 0.1)'
+        return {
+          bg: 'rgba(168, 85, 247, 0.15)',
+          border: '#A855F7',
+          shadow: 'rgba(168, 85, 247, 0.6)'
+        }
       case 'printer':
-        return 'rgba(245, 158, 11, 0.1)'
+        return {
+          bg: 'rgba(245, 158, 11, 0.15)',
+          border: '#F59E0B',
+          shadow: 'rgba(245, 158, 11, 0.6)'
+        }
       case 'server':
-        return 'rgba(239, 68, 68, 0.1)'
+        return {
+          bg: 'rgba(239, 68, 68, 0.15)',
+          border: '#EF4444',
+          shadow: 'rgba(239, 68, 68, 0.6)'
+        }
       case 'iot':
-        return 'rgba(6, 182, 212, 0.1)'
+        return {
+          bg: 'rgba(6, 182, 212, 0.15)',
+          border: '#06B6D4',
+          shadow: 'rgba(6, 182, 212, 0.6)'
+        }
       case 'internet':
-        return 'rgba(255, 255, 255, 0.05)'
+        return {
+          bg: 'rgba(255, 255, 255, 0.08)',
+          border: 'rgba(255, 255, 255, 0.5)',
+          shadow: 'rgba(255, 255, 255, 0.3)'
+        }
       default:
-        return 'rgba(100, 116, 139, 0.1)'
+        return {
+          bg: 'rgba(100, 116, 139, 0.15)',
+          border: '#64748B',
+          shadow: 'rgba(100, 116, 139, 0.6)'
+        }
     }
   }
 
-  const getBorderColor = () => {
-    switch (data.type) {
-      case 'router':
-        return 'rgba(0, 245, 255, 0.6)'
-      case 'laptop':
-        return 'rgba(34, 197, 94, 0.6)'
-      case 'mobile':
-        return 'rgba(168, 85, 247, 0.6)'
-      case 'printer':
-        return 'rgba(245, 158, 11, 0.6)'
-      case 'server':
-        return 'rgba(239, 68, 68, 0.6)'
-      case 'iot':
-        return 'rgba(6, 182, 212, 0.6)'
-      case 'internet':
-        return 'rgba(255, 255, 255, 0.2)'
-      default:
-        return 'rgba(100, 116, 139, 0.6)'
-    }
-  }
+  const colors = getColors()
 
   return (
     <Tooltip
       title={
-        <Box sx={{ p: 1 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+        <Box sx={{ p: 1.5 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
             {data.label}
           </Typography>
+          {data.deviceType && (
+            <Typography variant="caption" sx={{ display: 'block', color: '#10B981', fontWeight: 600 }}>
+              Type: {data.deviceType}
+            </Typography>
+          )}
           {data.ip && (
-            <Typography variant="caption" sx={{ display: 'block' }}>
+            <Typography variant="caption" sx={{ display: 'block', mt: 0.5 }}>
               IP: {data.ip}
             </Typography>
           )}
           {data.mac && (
-            <Typography variant="caption" sx={{ display: 'block' }}>
+            <Typography variant="caption" sx={{ display: 'block', mt: 0.3 }}>
               MAC: {data.mac}
             </Typography>
           )}
+          {data.manufacturer && data.manufacturer !== "Unknown" && (
+            <Typography variant="caption" sx={{ display: 'block', mt: 0.3, color: '#3B82F6' }}>
+              Manufacturer: {data.manufacturer}
+            </Typography>
+          )}
           {data.openPorts && data.openPorts.length > 0 && (
-            <Typography variant="caption" sx={{ display: 'block', color: '#F59E0B' }}>
-              Open Ports: {data.openPorts.length}
+            <Typography variant="caption" sx={{ display: 'block', mt: 0.3, color: '#F59E0B' }}>
+              Open Ports: {data.openPorts.join(', ')}
             </Typography>
           )}
         </Box>
       }
       arrow
+      placement="top"
     >
       <Box
         sx={{
-          width: 120,
-          height: 80,
-          borderRadius: 2,
-          backgroundColor: getBgColor(),
-          border: `2px solid ${getBorderColor()}`,
+          width: 140,
+          height: 105,
+          borderRadius: '12px',
+          backgroundColor: colors.bg,
+          border: selected ? `3px solid ${colors.border}` : `2px solid ${colors.border}`,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 0.5,
-          boxShadow: '0 0 15px rgba(0, 0, 0, 0.3)',
-          transition: 'all 0.3s ease',
+          gap: 0.4,
+          padding: 0.6,
+          backdropFilter: 'blur(8px)',
+          boxShadow: `0 4px 20px ${colors.shadow}`,
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          animation: `${float} 3s ease-in-out infinite`,
+          cursor: 'pointer',
           '&:hover': {
-            boxShadow: `0 0 25px ${getBorderColor()}`,
-            transform: 'scale(1.05)',
+            boxShadow: `0 8px 35px ${colors.shadow}`,
+            transform: 'scale(1.08) translateY(-3px)',
+            animation: `${pulse} 1.5s infinite, ${glow} 2s ease-in-out infinite`,
+            borderWidth: '3px',
           },
         }}
       >
@@ -139,30 +200,61 @@ const CustomNode = ({ data, isConnectable }) => {
             type="target"
             position={Position.Left}
             isConnectable={isConnectable}
-            style={{ backgroundColor: '#00F5FF', width: 8, height: 8 }}
+            style={{
+              backgroundColor: colors.border,
+              width: 10,
+              height: 10,
+              border: '2px solid #020617',
+            }}
           />
         )}
-        {getIcon()}
+        <Box sx={{ animation: `${glow} 3s ease-in-out infinite` }}>
+          {getIcon()}
+        </Box>
         <Typography
           variant="caption"
           sx={{
             color: '#E2E8F0',
-            fontWeight: 600,
+            fontWeight: 700,
             textAlign: 'center',
-            maxWidth: '100px',
+            maxWidth: '120px',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            fontSize: '0.75rem',
           }}
         >
           {data.label}
         </Typography>
+        {data.deviceType && (
+          <Typography
+            variant="caption"
+            sx={{
+              color: colors.border,
+              fontSize: '0.65rem',
+              fontWeight: 600,
+              textAlign: 'center',
+              maxWidth: '120px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              textTransform: 'capitalize',
+            }}
+          >
+            {data.deviceType}
+          </Typography>
+        )}
         {data.type !== 'router' && (
           <Handle
             type="source"
             position={Position.Right}
             isConnectable={isConnectable}
-            style={{ backgroundColor: '#00F5FF', width: 8, height: 8 }}
+            style={{
+              backgroundColor: colors.border,
+              width: 10,
+              height: 10,
+              border: '2px solid #020617',
+            }}
           />
         )}
       </Box>
@@ -202,7 +294,7 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
-  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null)
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null)
   const prevInitialNodesRef = useRef<string>('')
   const prevInitialEdgesRef = useRef<string>('')
 
@@ -210,7 +302,6 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
   const { initialNodes, initialEdges } = useMemo(() => {
     const generatedNodes: any[] = []
     const generatedEdges: any[] = []
-    const idCounter = { current: 1 }
 
     // Add internet node
     generatedNodes.push({
@@ -246,11 +337,12 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
     // Determine device types
     const getDeviceType = (device: Device) => {
       const type = device.device_type?.toLowerCase()
-      if (type?.includes('mobile') || type?.includes('phone')) return 'mobile'
-      if (type?.includes('laptop') || type?.includes('computer') || type?.includes('windows')) return 'laptop'
+      if (type?.includes('mobile') || type?.includes('phone') || type?.includes('tablet')) return 'mobile'
+      if (type?.includes('laptop') || type?.includes('computer') || type?.includes('windows') || type?.includes('linux')) return 'laptop'
       if (type?.includes('printer')) return 'printer'
       if (type?.includes('server') || type?.includes('nas')) return 'server'
-      if (type?.includes('iot') || type?.includes('smart')) return 'iot'
+      if (type?.includes('iot') || type?.includes('smart') || type?.includes('embedded')) return 'iot'
+      if (type?.includes('network') || type?.includes('router') || type?.includes('switch')) return 'router'
       return 'laptop'
     }
 
@@ -318,17 +410,20 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
       const y = startY + row * gapY
 
       generatedNodes.push({
-        id: deviceId,
-        type: 'custom',
-        position: { x, y },
-        data: {
-          label: device.hostname || device.ip,
-          type: getDeviceType(device),
-          ip: device.ip,
-          mac: device.mac,
-          openPorts: device.open_ports,
-        },
-      })
+          id: deviceId,
+          type: 'custom',
+          position: { x, y },
+          data: {
+            label: device.hostname || device.ip,
+            type: getDeviceType(device),
+            deviceType: device.device_type,
+            ip: device.ip,
+            mac: device.mac,
+            manufacturer: device.manufacturer,
+            openPorts: device.open_ports,
+            fullDevice: device, // Store full device object
+          },
+        })
 
       // Connect device to router
       generatedEdges.push({
@@ -362,29 +457,39 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
     [setEdges]
   )
 
+  const onNodeClick = useCallback(
+    (_: any, node: any) => {
+      if (node.data.fullDevice) {
+        setSelectedDevice(node.data.fullDevice)
+      }
+    },
+    []
+  )
+
   return (
-    <Box
-      ref={reactFlowWrapper}
-      sx={{
-        width: '100%',
-        height: '100%',
-        minHeight: '400px',
-        borderRadius: 2,
-        overflow: 'hidden',
-        border: '1px solid rgba(0, 245, 255, 0.2)',
-      }}
-    >
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onInit={setReactFlowInstance}
-        nodeTypes={nodeTypes}
-        fitView
-        style={{ backgroundColor: '#020617' }}
+    <>
+      <Box
+        ref={reactFlowWrapper}
+        sx={{
+          width: '100%',
+          height: '100%',
+          minHeight: '400px',
+          borderRadius: 2,
+          overflow: 'hidden',
+          border: '1px solid rgba(0, 245, 255, 0.2)',
+        }}
       >
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={onNodeClick}
+          nodeTypes={nodeTypes}
+          fitView
+          style={{ backgroundColor: '#020617' }}
+        >
         <Background color="#1E293B" gap={30} />
         <Controls
           style={{
@@ -401,8 +506,12 @@ export const NetworkTopology = ({ devices = [], networkInfo }: NetworkTopologyPr
           }}
         />
       </ReactFlow>
-    </Box>
+      </Box>
+      <DeviceDetailsModal
+        open={!!selectedDevice}
+        onClose={() => setSelectedDevice(null)}
+        device={selectedDevice}
+      />
+    </>
   )
 }
-
-export default NetworkTopology

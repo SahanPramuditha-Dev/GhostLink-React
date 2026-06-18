@@ -31,6 +31,8 @@ import {
   List as ListIcon,
   X,
   Target,
+  Sun,
+  Moon,
 } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
@@ -44,7 +46,7 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { setIsAdmin, selectedNetwork, snackbar, setSnackbar } = useAppContext()
+  const { setIsAdmin, selectedNetwork, snackbar, setSnackbar, themeMode, toggleThemeMode } = useAppContext()
 
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -170,7 +172,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         sx={{
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           ml: { md: `${DRAWER_WIDTH}px` },
-          backgroundColor: '#151929',
+          backgroundColor: (theme) => theme.palette.background.paper,
           boxShadow: 'none',
           borderBottom: 1,
           borderColor: 'divider',
@@ -191,20 +193,29 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
               {navItems.find((item) => item.path === location.pathname)?.label || 'Dashboard'}
             </Typography>
           </Box>
-          {selectedNetwork && (
-            <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Target size={18} color="#00BCD4" />
-              <Chip
-                label={`Target: ${selectedNetwork.ssid}`}
-                size="small"
-                sx={{
-                  backgroundColor: 'rgba(0, 188, 212, 0.1)',
-                  color: '#00BCD4',
-                  fontWeight: 500,
-                }}
-              />
-            </Box>
-          )}
+          <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton
+              onClick={toggleThemeMode}
+              color="inherit"
+              aria-label="Toggle theme"
+            >
+              {themeMode === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </IconButton>
+            {selectedNetwork && (
+              <>
+                <Target size={18} color={theme.palette.primary.main} />
+                <Chip
+                  label={`Target: ${selectedNetwork.ssid}`}
+                  size="small"
+                  sx={{
+                    backgroundColor: `${theme.palette.primary.main}1A`, // 10% opacity
+                    color: theme.palette.primary.main,
+                    fontWeight: 500,
+                  }}
+                />
+              </>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -222,7 +233,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: DRAWER_WIDTH,
-              backgroundColor: '#151929',
+              backgroundColor: (theme) => theme.palette.background.paper,
               borderRight: 'none',
             },
           }}
@@ -236,7 +247,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: DRAWER_WIDTH,
-              backgroundColor: '#151929',
+              backgroundColor: (theme) => theme.palette.background.paper,
               borderRight: 1,
               borderColor: 'divider',
             },
