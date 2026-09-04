@@ -50,6 +50,6 @@
   "devDependencies": {
     "electron": "26.2.0",
     "electron-builder": "^24.6.0",
-    "concurrently": "^8.2.0"
+    "concurrently": "^10.0.5"
   }
 }
